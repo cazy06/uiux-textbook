@@ -1,0 +1,767 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>プロセス早見表 — UI/UX Atlas</title>
+<meta name="description" content="UI/UXデザインの主要方法論をINPUT・PROCESS・OUTPUTで整理した実務参照資料">
+<style>
+:root {
+  --bg:#f9f9f7; --surface:#fff; --border:#e0ddd8;
+  --text:#1a1a18; --sub:#666662; --accent:#2563eb;
+  --in-bg:#eff6ff; --in-bd:#93c5fd;
+  --pr-bg:#fffbeb; --pr-bd:#fcd34d;
+  --out-bg:#f0fdf4; --out-bd:#6ee7b7;
+  --r:10px;
+  --font:-apple-system,'Helvetica Neue','Hiragino Sans',sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:14px;line-height:1.65}
+
+/* Header */
+header{
+  position:sticky;top:0;z-index:100;
+  background:rgba(249,249,247,.96);backdrop-filter:blur(8px);
+  border-bottom:1px solid var(--border);
+  padding:11px 24px;display:flex;align-items:center;gap:14px;
+}
+.h-home{font-size:12px;color:var(--accent);text-decoration:none;white-space:nowrap}
+.h-home:hover{text-decoration:underline}
+.h-title{font-size:15px;font-weight:800;flex:1}
+.h-sub{font-size:11px;color:var(--sub)}
+.lang-row{display:flex;gap:4px}
+.lb{
+  padding:4px 10px;border-radius:6px;border:1px solid var(--border);
+  background:transparent;cursor:pointer;font-size:11.5px;font-weight:700;
+  color:var(--sub);transition:all .15s;
+}
+.lb.on{background:var(--accent);color:#fff;border-color:var(--accent)}
+
+/* Container */
+.wrap{max-width:980px;margin:0 auto;padding:32px 22px}
+
+/* Intro */
+.intro{margin-bottom:28px}
+.intro h1{font-size:20px;font-weight:800;margin-bottom:7px}
+.intro p{color:var(--sub);font-size:13px;max-width:660px;line-height:1.7}
+.intro a{color:var(--accent)}
+
+/* Filter */
+.fbar{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:26px}
+.fb{
+  padding:5px 14px;border-radius:999px;border:1.5px solid var(--border);
+  background:var(--surface);cursor:pointer;font-size:12px;font-weight:600;
+  color:var(--sub);transition:all .15s;
+}
+.fb:hover{border-color:var(--accent);color:var(--accent)}
+.fb.on{background:var(--accent);color:#fff;border-color:var(--accent)}
+
+/* Section divider */
+.sdiv{
+  text-align:center;font-size:10.5px;font-weight:800;color:var(--sub);
+  text-transform:uppercase;letter-spacing:.1em;
+  display:flex;align-items:center;gap:12px;margin:30px 0 18px;
+}
+.sdiv::before,.sdiv::after{content:'';flex:1;height:1px;background:var(--border)}
+
+/* Method card */
+.mc{
+  background:var(--surface);border:1.5px solid var(--border);
+  border-radius:var(--r);margin-bottom:22px;overflow:hidden;
+  transition:box-shadow .2s;
+}
+.mc:hover{box-shadow:0 4px 18px rgba(0,0,0,.07)}
+.mc.hidden{display:none}
+
+.ch{padding:17px 22px 13px;border-bottom:1px solid var(--border);display:flex;gap:13px;align-items:flex-start}
+.cnum{
+  font-size:11px;font-weight:700;color:var(--sub);
+  background:var(--bg);border:1px solid var(--border);
+  border-radius:6px;padding:2px 8px;white-space:nowrap;margin-top:3px;
+}
+.cm{flex:1}
+.ct{font-size:16px;font-weight:800;margin-bottom:3px}
+.cen{font-size:11.5px;color:var(--sub);margin-bottom:7px}
+.bgs{display:flex;gap:5px;flex-wrap:wrap}
+.bg{font-size:10px;font-weight:700;padding:2px 9px;border-radius:999px}
+.bgm{background:#eff6ff;color:#1d4ed8}
+.bgg{background:#f5f3ff;color:#6d28d9}
+.bgd{background:#f0fdf4;color:#166534}
+.cdesc{font-size:12.5px;color:var(--sub);margin-top:9px;line-height:1.65}
+
+/* IPO */
+.ipow{padding:16px 22px}
+.ipol{font-size:10.5px;font-weight:800;text-transform:uppercase;letter-spacing:.07em;color:var(--sub);margin-bottom:9px}
+.ipt{width:100%;border-collapse:collapse;font-size:12.5px}
+.ipt th{
+  padding:8px 13px;font-size:10.5px;font-weight:800;
+  text-transform:uppercase;letter-spacing:.06em;
+  text-align:left;border-bottom:2px solid;
+}
+.ipt td{padding:12px 13px;vertical-align:top;border-top:1px solid var(--border);width:33.33%}
+.ci th{background:var(--in-bg);color:#1e40af;border-color:var(--in-bd)}
+.cp th{background:var(--pr-bg);color:#92400e;border-color:var(--pr-bd)}
+.co th{background:var(--out-bg);color:#166534;border-color:var(--out-bd)}
+.ipt ul{padding-left:15px}.ipt li{margin-bottom:4px}
+.ipt ol{padding-left:16px}.ipt ol li{margin-bottom:5px}
+.sm{font-size:11px;color:#888;display:block;margin-top:2px}
+
+/* Use / not use */
+.uw{padding:0 22px 16px;display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.ub{border-radius:7px;padding:11px 13px;font-size:12px;line-height:1.6}
+.uby{background:#f0fdf4;border-left:3px solid #22c55e}
+.ubn{background:#fef2f2;border-left:3px solid #ef4444}
+.ub strong{display:block;font-size:10px;text-transform:uppercase;letter-spacing:.05em;margin-bottom:4px}
+.uby strong{color:#166534}.ubn strong{color:#991b1b}
+
+/* Card footer */
+.cf{
+  padding:9px 22px;border-top:1px solid var(--border);background:var(--bg);
+  display:flex;justify-content:space-between;align-items:center;
+}
+.cf .tm{font-size:11px;color:var(--sub)}
+.cl{font-size:12px;font-weight:700;color:var(--accent);text-decoration:none}
+.cl:hover{text-decoration:underline}
+
+/* Bilingual */
+[lang="en"] .ja-only,[lang="ja"] .en-only{display:none}
+
+/* Footer */
+footer{border-top:1px solid var(--border);padding:18px 24px;text-align:center;font-size:12px;color:var(--sub)}
+footer a{color:var(--accent)}
+
+/* Dual-track layout */
+.trk{border-radius:7px;padding:9px 11px;margin-bottom:7px;font-size:12px}
+.trk-d{background:#eff6ff}.trk-v{background:#f0fdf4}
+.trk strong{font-size:11px;color:#1e40af;display:block;margin-bottom:4px}
+.trk-v strong{color:#166534}
+.trk ol{padding-left:15px}.trk ol li{margin-bottom:3px}
+</style>
+</head>
+<body lang="ja">
+
+<header>
+  <a class="h-home" href="index.html">← UI/UX Atlas</a>
+  <div>
+    <div class="h-title"><span class="ja-only">プロセス早見表</span><span class="en-only">Process Reference</span></div>
+    <div class="h-sub">INPUT · PROCESS · OUTPUT</div>
+  </div>
+  <div class="lang-row">
+    <button class="lb on" onclick="setLang('ja')">JA</button>
+    <button class="lb" onclick="setLang('en')">EN</button>
+  </div>
+</header>
+
+<div class="wrap">
+
+<div class="intro">
+  <h1><span class="ja-only">プロセス早見表</span><span class="en-only">Process Reference</span></h1>
+  <p>
+    <span class="ja-only">各デザイン方法論を「INPUT（何を持ち込むか）」「PROCESS（何をするか）」「OUTPUT（何が生まれるか）」で整理した実務参照資料。概念の詳細は <a href="index.html">UI/UX Atlas 本編</a> を参照してください。</span>
+    <span class="en-only">A practical reference organizing each design methodology by INPUT (what you bring), PROCESS (what you do), and OUTPUT (what is produced). For concept details, see the <a href="index.html">UI/UX Atlas main text</a>.</span>
+  </p>
+</div>
+
+<div class="fbar">
+  <button class="fb on" onclick="filter('all',this)"><span class="ja-only">すべて</span><span class="en-only">All</span></button>
+  <button class="fb" onclick="filter('hcd',this)"><span class="ja-only">HCD系</span><span class="en-only">HCD-based</span></button>
+  <button class="fb" onclick="filter('agile',this)"><span class="ja-only">アジャイル系</span><span class="en-only">Agile-based</span></button>
+  <button class="fb" onclick="filter('innovation',this)"><span class="ja-only">発想・革新</span><span class="en-only">Innovation</span></button>
+  <button class="fb" onclick="filter('systems',this)"><span class="ja-only">システム・組織</span><span class="en-only">Systems / Org</span></button>
+</div>
+
+<!-- ═══════ HCD 系 ═══════ -->
+<div class="sdiv" data-cat="hcd"><span class="ja-only">HCD系</span><span class="en-only">HCD-based</span></div>
+
+<!-- 01 HCD -->
+<section class="mc" data-cat="hcd" id="ref-hcd">
+  <div class="ch">
+    <div class="cnum">01</div>
+    <div class="cm">
+      <div class="ct"><span class="ja-only">人間中心設計（HCD）</span><span class="en-only">Human-Centered Design (HCD)</span></div>
+      <div class="cen">ISO 9241-210 <span class="ja-only">準拠の4活動モデル</span><span class="en-only">four-activity model</span></div>
+      <div class="bgs">
+        <span class="bg bgm">HCD系</span>
+        <span class="bg bgg"><span class="ja-only">全階層横断</span><span class="en-only">All layers</span></span>
+        <span class="bg bgd"><span class="ja-only">プロジェクト全期間</span><span class="en-only">Full project lifecycle</span></span>
+      </div>
+      <div class="cdesc">
+        <span class="ja-only">ユーザーを設計プロセスの中心に置き、利用状況調査・要件定義・設計・評価を反復する国際規格準拠アプローチ。規制産業や公共サービスで特に有効。</span>
+        <span class="en-only">Standards-compliant approach placing users at the center of design; iterates context research, requirements, design, and evaluation. Especially effective in regulated industries and public services.</span>
+      </div>
+    </div>
+  </div>
+  <div class="ipow">
+    <div class="ipol">INPUT · PROCESS · OUTPUT</div>
+    <table class="ipt">
+      <thead><tr><th class="ci">INPUT</th><th class="cp">PROCESS</th><th class="co">OUTPUT</th></tr></thead>
+      <tbody><tr>
+        <td>
+          <ul>
+            <li><span class="ja-only">問題記述・ビジネス目標</span><span class="en-only">Problem statement & business goals</span></li>
+            <li><span class="ja-only">ビジネス要件・制約条件</span><span class="en-only">Business requirements & constraints</span></li>
+            <li><span class="ja-only">既存システム・競合分析</span><span class="en-only">Existing system & competitive analysis</span></li>
+            <li><span class="ja-only">ユーザーへのアクセス機会</span><span class="en-only">User access (interviews, observation)</span></li>
+            <li><span class="ja-only">ステークホルダーの関与</span><span class="en-only">Stakeholder involvement</span></li>
+          </ul>
+        </td>
+        <td>
+          <ol>
+            <li><strong><span class="ja-only">利用状況の把握</span><span class="en-only">Context of Use Analysis</span></strong><span class="sm"><span class="ja-only">コンテキスチュアルインクワイアリー・観察・日記調査</span><span class="en-only">Contextual inquiry, observation, diary studies</span></span></li>
+            <li><strong><span class="ja-only">ユーザー要求の明示</span><span class="en-only">User Requirements Specification</span></strong><span class="sm"><span class="ja-only">ペルソナ・CJM・ユーザーゴール整理</span><span class="en-only">Personas, CJM, user goal mapping</span></span></li>
+            <li><strong><span class="ja-only">設計解の作成</span><span class="en-only">Design Solution Creation</span></strong><span class="sm"><span class="ja-only">IA・ワイヤーフレーム・プロトタイプ</span><span class="en-only">IA, wireframes, prototypes</span></span></li>
+            <li><strong><span class="ja-only">設計の評価</span><span class="en-only">Design Evaluation</span></strong><span class="sm"><span class="ja-only">ユーザビリティテスト・ヒューリスティック評価 → ②へ反復</span><span class="en-only">Usability testing, heuristic eval → iterate to ②</span></span></li>
+          </ol>
+        </td>
+        <td>
+          <ul>
+            <li><span class="ja-only">ユーザー要求仕様書（URS）</span><span class="en-only">User Requirements Specification (URS)</span></li>
+            <li><span class="ja-only">ペルソナ・シナリオドキュメント</span><span class="en-only">Persona & scenario documents</span></li>
+            <li><span class="ja-only">評価済みプロトタイプ</span><span class="en-only">Evaluated prototypes</span></li>
+            <li><span class="ja-only">ユーザビリティ評価レポート</span><span class="en-only">Usability evaluation report</span></li>
+            <li><span class="ja-only">（規制産業）ISO 9241適合宣言</span><span class="en-only">(Regulated) ISO 9241 conformance statement</span></li>
+          </ul>
+        </td>
+      </tr></tbody>
+    </table>
+  </div>
+  <div class="uw">
+    <div class="ub uby"><strong>✓ <span class="ja-only">向いている状況</span><span class="en-only">When to Use</span></strong><span class="ja-only">ISO/規制準拠が必要な医療・公共・金融システム。長期プロジェクト。エビデンスを重視する組織。</span><span class="en-only">ISO/regulatory compliance required (medical, public, financial). Long-term projects. Evidence-driven organizations.</span></div>
+    <div class="ub ubn"><strong>✕ <span class="ja-only">向いていない状況</span><span class="en-only">When Not to Use</span></strong><span class="ja-only">短期スプリント。ユーザーアクセスが困難。スタートアップの初期仮説検証フェーズ。</span><span class="en-only">Short sprints. Limited user access. Early-stage startup hypothesis validation.</span></div>
+  </div>
+  <div class="cf">
+    <span class="tm">👥 <span class="ja-only">UXデザイナー・リサーチャー・PdM・エンジニア</span><span class="en-only">UX Designer, Researcher, PdM, Engineer</span></span>
+    <a class="cl" href="index.html#s-hcd">→ <span class="ja-only">本編で詳しく読む</span><span class="en-only">Read full text</span></a>
+  </div>
+</section>
+
+<!-- 02 GDD -->
+<section class="mc" data-cat="hcd" id="ref-gdd">
+  <div class="ch">
+    <div class="cnum">02</div>
+    <div class="cm">
+      <div class="ct"><span class="ja-only">ゴール指向デザイン（GDD）</span><span class="en-only">Goal-Directed Design (GDD)</span></div>
+      <div class="cen">Alan Cooper — <em>About Face</em></div>
+      <div class="bgs">
+        <span class="bg bgm">HCD系</span>
+        <span class="bg bgg"><span class="ja-only">戦略〜骨格層</span><span class="en-only">Strategy→Skeleton</span></span>
+        <span class="bg bgd"><span class="ja-only">3〜6ヶ月</span><span class="en-only">3–6 months</span></span>
+      </div>
+      <div class="cdesc">
+        <span class="ja-only">ユーザーの「ゴール（目標）」を起点に機能要件を導出する6フェーズアプローチ。ペルソナを設計の唯一の基準として機能させ、複雑なエンタープライズシステム設計に強みを持つ。</span>
+        <span class="en-only">A 6-phase approach deriving functional requirements from users' "goals." Uses personas as the sole design criterion; strong for complex enterprise system design.</span>
+      </div>
+    </div>
+  </div>
+  <div class="ipow">
+    <div class="ipol">INPUT · PROCESS · OUTPUT</div>
+    <table class="ipt">
+      <thead><tr><th class="ci">INPUT</th><th class="cp">PROCESS</th><th class="co">OUTPUT</th></tr></thead>
+      <tbody><tr>
+        <td>
+          <ul>
+            <li><span class="ja-only">ステークホルダーインタビュー（経営・PdM・営業・CS）</span><span class="en-only">Stakeholder interviews (exec, PdM, sales, CS)</span></li>
+            <li><span class="ja-only">ユーザーインタビュー・観察</span><span class="en-only">User interviews & field observation</span></li>
+            <li><span class="ja-only">競合製品・業界分析</span><span class="en-only">Competitive & industry analysis</span></li>
+            <li><span class="ja-only">既存システムの問題データ</span><span class="en-only">Existing system problem data</span></li>
+          </ul>
+        </td>
+        <td>
+          <ol>
+            <li><strong>Research</strong><span class="sm"><span class="ja-only">行動・目標・フラストレーションを収集</span><span class="en-only">Gather behaviors, goals, frustrations</span></span></li>
+            <li><strong>Modeling</strong><span class="sm"><span class="ja-only">ペルソナ・文脈シナリオ作成</span><span class="en-only">Create personas & context scenarios</span></span></li>
+            <li><strong>Requirements</strong><span class="sm"><span class="ja-only">ゴール→機能要件マッピング</span><span class="en-only">Map goals → functional requirements</span></span></li>
+            <li><strong>Framework</strong><span class="sm"><span class="ja-only">インタラクションフレームワーク（主要画面構造）</span><span class="en-only">Interaction framework (key screen structure)</span></span></li>
+            <li><strong>Refinement → Support</strong><span class="sm"><span class="ja-only">詳細設計・開発サポート</span><span class="en-only">Detailed design & dev support</span></span></li>
+          </ol>
+        </td>
+        <td>
+          <ul>
+            <li><span class="ja-only">ペルソナドキュメント（1〜5体）</span><span class="en-only">Persona documents (1–5)</span></li>
+            <li><span class="ja-only">文脈シナリオ・キーパスシナリオ</span><span class="en-only">Context & key-path scenarios</span></li>
+            <li><span class="ja-only">要件行列（ゴール×機能）</span><span class="en-only">Requirements matrix (goals × features)</span></li>
+            <li><span class="ja-only">インタラクションフレームワーク</span><span class="en-only">Interaction framework</span></li>
+            <li><span class="ja-only">詳細デザイン仕様書</span><span class="en-only">Detailed design specification</span></li>
+          </ul>
+        </td>
+      </tr></tbody>
+    </table>
+  </div>
+  <div class="uw">
+    <div class="ub uby"><strong>✓ <span class="ja-only">向いている状況</span><span class="en-only">When to Use</span></strong><span class="ja-only">複雑なエンタープライズ・B2Bシステム。機能要件が多い大規模プロダクト。</span><span class="en-only">Complex enterprise/B2B systems. Large products with many functional requirements.</span></div>
+    <div class="ub ubn"><strong>✕ <span class="ja-only">向いていない状況</span><span class="en-only">When Not to Use</span></strong><span class="ja-only">小規模・短期プロジェクト。ペルソナ調査に十分な時間が取れない場合。</span><span class="en-only">Small or short-term projects. Insufficient time for persona research.</span></div>
+  </div>
+  <div class="cf">
+    <span class="tm">👥 <span class="ja-only">UXデザイナー・インタラクションデザイナー・PdM</span><span class="en-only">UX Designer, IxD Designer, PdM</span></span>
+    <a class="cl" href="index.html#s-goal-directed">→ <span class="ja-only">本編で詳しく読む</span><span class="en-only">Read full text</span></a>
+  </div>
+</section>
+
+<!-- ═══════ 発想・革新系 ═══════ -->
+<div class="sdiv" data-cat="innovation"><span class="ja-only">発想・革新系</span><span class="en-only">Innovation-based</span></div>
+
+<!-- 03 Design Thinking -->
+<section class="mc" data-cat="innovation" id="ref-dt">
+  <div class="ch">
+    <div class="cnum">03</div>
+    <div class="cm">
+      <div class="ct"><span class="ja-only">デザイン思考</span><span class="en-only">Design Thinking</span></div>
+      <div class="cen">IDEO / Stanford d.school</div>
+      <div class="bgs">
+        <span class="bg bgm"><span class="ja-only">発想・革新</span><span class="en-only">Innovation</span></span>
+        <span class="bg bgg"><span class="ja-only">戦略・要件層</span><span class="en-only">Strategy & Scope</span></span>
+        <span class="bg bgd"><span class="ja-only">1日〜数ヶ月</span><span class="en-only">1 day – months</span></span>
+      </div>
+      <div class="cdesc">
+        <span class="ja-only">問題定義そのものから始める非線形・反復的アプローチ。共感→定義→発散→プロトタイプ→テストの5フェーズで問題を探索する。ワークショップから中長期プロジェクトまで適用可能。</span>
+        <span class="en-only">Non-linear, iterative approach starting from problem definition itself. Explores problems through 5 phases: Empathize → Define → Ideate → Prototype → Test. Applicable from workshops to long-term projects.</span>
+      </div>
+    </div>
+  </div>
+  <div class="ipow">
+    <div class="ipol">INPUT · PROCESS · OUTPUT</div>
+    <table class="ipt">
+      <thead><tr><th class="ci">INPUT</th><th class="cp">PROCESS</th><th class="co">OUTPUT</th></tr></thead>
+      <tbody><tr>
+        <td>
+          <ul>
+            <li><span class="ja-only">漠然とした課題・テーマ（HMWの起点）</span><span class="en-only">Vague challenge / theme (HMW starting point)</span></li>
+            <li><span class="ja-only">多職種チーム（デザイナー・エンジニア・ビジネス・専門家）</span><span class="en-only">Cross-functional team (designers, engineers, business, domain experts)</span></li>
+            <li><span class="ja-only">ユーザーへのアクセス機会</span><span class="en-only">Access to users for interviews/observation</span></li>
+            <li><span class="ja-only">プロトタイプ素材（付箋・紙・ホワイトボード）</span><span class="en-only">Prototyping materials (sticky notes, paper, whiteboard)</span></li>
+          </ul>
+        </td>
+        <td>
+          <ol>
+            <li><strong>Empathize</strong><span class="sm"><span class="ja-only">観察・インタビュー・シャドーイングで共感データ収集</span><span class="en-only">Observation, interviews, shadowing</span></span></li>
+            <li><strong>Define</strong><span class="sm"><span class="ja-only">アフィニティ図→POVステートメント→HMW問い設定</span><span class="en-only">Affinity diagram → POV → HMW questions</span></span></li>
+            <li><strong>Ideate</strong><span class="sm"><span class="ja-only">ブレスト・クレイジーエイツ・発散後に収束</span><span class="en-only">Brainstorm, Crazy 8s, diverge then converge</span></span></li>
+            <li><strong>Prototype</strong><span class="sm"><span class="ja-only">低忠実度モック（紙・Figma）を素早く作成</span><span class="en-only">Rapid low-fi mockups (paper, Figma)</span></span></li>
+            <li><strong>Test</strong><span class="sm"><span class="ja-only">5人以上でテスト→学習→次サイクルへ</span><span class="en-only">Test with 5+ users → learn → next cycle</span></span></li>
+          </ol>
+        </td>
+        <td>
+          <ul>
+            <li><span class="ja-only">共感マップ・インタビュー記録</span><span class="en-only">Empathy maps, interview notes</span></li>
+            <li><span class="ja-only">POVステートメント</span><span class="en-only">POV (Point of View) statement</span></li>
+            <li><span class="ja-only">HMW問い一覧</span><span class="en-only">HMW question list</span></li>
+            <li><span class="ja-only">アイデアスケッチ群</span><span class="en-only">Idea sketches</span></li>
+            <li><span class="ja-only">テスト済みプロトタイプ＋洞察サマリー</span><span class="en-only">Tested prototype + insight summary</span></li>
+          </ul>
+        </td>
+      </tr></tbody>
+    </table>
+  </div>
+  <div class="uw">
+    <div class="ub uby"><strong>✓ <span class="ja-only">向いている状況</span><span class="en-only">When to Use</span></strong><span class="ja-only">問題が不明確な新規事業・サービス開発。チームの視点が固まっているときの発散。組織横断ワークショップ。</span><span class="en-only">New business/service with unclear problems. Divergence when team is stuck. Cross-org workshops.</span></div>
+    <div class="ub ubn"><strong>✕ <span class="ja-only">向いていない状況</span><span class="en-only">When Not to Use</span></strong><span class="ja-only">問題が既に明確な場合。厳格な規制準拠が求められる場合（HCDを使う）。</span><span class="en-only">Problem already clearly defined. Strict regulatory compliance required (use HCD instead).</span></div>
+  </div>
+  <div class="cf">
+    <span class="tm">👥 <span class="ja-only">多職種チーム（5〜8名）+ ファシリテーター</span><span class="en-only">Cross-functional team (5–8) + Facilitator</span></span>
+    <a class="cl" href="index.html#s-design-thinking">→ <span class="ja-only">本編で詳しく読む</span><span class="en-only">Read full text</span></a>
+  </div>
+</section>
+
+<!-- 04 Design Sprint -->
+<section class="mc" data-cat="innovation" id="ref-sprint">
+  <div class="ch">
+    <div class="cnum">04</div>
+    <div class="cm">
+      <div class="ct"><span class="ja-only">デザインスプリント</span><span class="en-only">Design Sprint</span></div>
+      <div class="cen">Jake Knapp / Google Ventures — <em>Sprint</em></div>
+      <div class="bgs">
+        <span class="bg bgm"><span class="ja-only">発想・革新</span><span class="en-only">Innovation</span></span>
+        <span class="bg bgg"><span class="ja-only">要件〜骨格層</span><span class="en-only">Scope→Skeleton</span></span>
+        <span class="bg bgd"><span class="ja-only">5日間（短縮版3日）</span><span class="en-only">5 days (3-day condensed)</span></span>
+      </div>
+      <div class="cdesc">
+        <span class="ja-only">5日間でアイデア創出からユーザーテストまでを完結させるタイムボックス型の意思決定加速フレームワーク。Decider（意思決定者）の参加が必須条件。</span>
+        <span class="en-only">Time-boxed decision-acceleration framework completing idea generation through user testing in 5 days. Requires a Decider (key decision-maker) to participate.</span>
+      </div>
+    </div>
+  </div>
+  <div class="ipow">
+    <div class="ipol">INPUT · PROCESS（5日間）· OUTPUT</div>
+    <table class="ipt">
+      <thead><tr><th class="ci">INPUT</th><th class="cp">PROCESS（5日間）</th><th class="co">OUTPUT</th></tr></thead>
+      <tbody><tr>
+        <td>
+          <ul>
+            <li><span class="ja-only">スプリントクエスチョン（中心課題）</span><span class="en-only">Sprint Question (central challenge)</span></li>
+            <li><span class="ja-only">Decider参加の5〜7名チーム</span><span class="en-only">5–7 person team incl. Decider</span></li>
+            <li><span class="ja-only">関連リサーチ・競合データ</span><span class="en-only">Relevant research & competitive data</span></li>
+            <li><span class="ja-only">5名のテストユーザー（事前確保）</span><span class="en-only">5 test users recruited in advance</span></li>
+          </ul>
+        </td>
+        <td>
+          <ol>
+            <li><strong>Day 1 – Map</strong><span class="sm"><span class="ja-only">長期目標確認・HMW・ターゲット絞り込み</span><span class="en-only">Long-term goal, HMW, target selection</span></span></li>
+            <li><strong>Day 2 – Sketch</strong><span class="sm"><span class="ja-only">Lightning Demos→4ステップスケッチ</span><span class="en-only">Lightning Demos → 4-step sketch</span></span></li>
+            <li><strong>Day 3 – Decide</strong><span class="sm"><span class="ja-only">ドット投票→ストーリーボード確定</span><span class="en-only">Dot vote → storyboard decision</span></span></li>
+            <li><strong>Day 4 – Prototype</strong><span class="sm"><span class="ja-only">Figmaでリアリスティックモック（8時間）</span><span class="en-only">Realistic prototype in Figma (8 hrs)</span></span></li>
+            <li><strong>Day 5 – Test</strong><span class="sm"><span class="ja-only">5人のユーザーテスト→パターン分析</span><span class="en-only">User tests with 5 people → pattern analysis</span></span></li>
+          </ol>
+        </td>
+        <td>
+          <ul>
+            <li><span class="ja-only">リアリスティックプロトタイプ</span><span class="en-only">Realistic prototype</span></li>
+            <li><span class="ja-only">5人分のインタビュー記録</span><span class="en-only">5 user interview recordings/notes</span></li>
+            <li><span class="ja-only">洞察サマリー・パターン分析</span><span class="en-only">Insight summary & pattern analysis</span></li>
+            <li><span class="ja-only">Go / No-Go / Pivot 意思決定記録</span><span class="en-only">Go / No-Go / Pivot decision record</span></li>
+          </ul>
+        </td>
+      </tr></tbody>
+    </table>
+  </div>
+  <div class="uw">
+    <div class="ub uby"><strong>✓ <span class="ja-only">向いている状況</span><span class="en-only">When to Use</span></strong><span class="ja-only">意思決定が急ぎ・チームが発散した状態・新機能・新サービスの検証・ピボット判断。</span><span class="en-only">Urgent decisions, divergent team, validating new features/services, pivot judgment.</span></div>
+    <div class="ub ubn"><strong>✕ <span class="ja-only">向いていない状況</span><span class="en-only">When Not to Use</span></strong><span class="ja-only">Deciderが参加できない。5日間確保できない。方向性がすでに決まっている。</span><span class="en-only">Decider cannot participate. Cannot secure 5 days. Direction already decided.</span></div>
+  </div>
+  <div class="cf">
+    <span class="tm">👥 <span class="ja-only">Decider（必須）＋デザイナー・エンジニア・PdM・専門家 計5〜7名</span><span class="en-only">Decider (required) + Designer, Engineer, PdM, Expert — 5–7 total</span></span>
+    <a class="cl" href="index.html#s-design-sprint">→ <span class="ja-only">本編で詳しく読む</span><span class="en-only">Read full text</span></a>
+  </div>
+</section>
+
+<!-- ═══════ アジャイル系 ═══════ -->
+<div class="sdiv" data-cat="agile"><span class="ja-only">アジャイル系</span><span class="en-only">Agile-based</span></div>
+
+<!-- 05 Lean UX -->
+<section class="mc" data-cat="agile" id="ref-leanux">
+  <div class="ch">
+    <div class="cnum">05</div>
+    <div class="cm">
+      <div class="ct">Lean UX</div>
+      <div class="cen">Jeff Gothelf — <em>Lean UX</em> (2013)</div>
+      <div class="bgs">
+        <span class="bg bgm"><span class="ja-only">アジャイル系</span><span class="en-only">Agile-based</span></span>
+        <span class="bg bgg"><span class="ja-only">戦略・要件層</span><span class="en-only">Strategy & Scope</span></span>
+        <span class="bg bgd"><span class="ja-only">スプリント単位（継続）</span><span class="en-only">Per sprint (ongoing)</span></span>
+      </div>
+      <div class="cdesc">
+        <span class="ja-only">アジャイル環境でのUX実践を体系化したフレームワーク。「仮定→実験→学習」のBuild-Measure-Learnサイクルと設計を統合し、成果物よりも学習と検証を優先する。</span>
+        <span class="en-only">Framework systematizing UX in Agile environments. Integrates design with Build-Measure-Learn cycle, prioritizing learning and validation over deliverables.</span>
+      </div>
+    </div>
+  </div>
+  <div class="ipow">
+    <div class="ipol">INPUT · PROCESS · OUTPUT</div>
+    <table class="ipt">
+      <thead><tr><th class="ci">INPUT</th><th class="cp">PROCESS</th><th class="co">OUTPUT</th></tr></thead>
+      <tbody><tr>
+        <td>
+          <ul>
+            <li><span class="ja-only">ビジネス仮定（ユーザー・問題・解決策・価値に関する前提）</span><span class="en-only">Business assumptions (users, problems, solutions, value)</span></li>
+            <li><span class="ja-only">既存のユーザーデータ・アナリティクス</span><span class="en-only">Existing user data & analytics</span></li>
+            <li><span class="ja-only">スプリントバックログ</span><span class="en-only">Sprint backlog</span></li>
+            <li><span class="ja-only">Lean UX Canvas（前サイクルから）</span><span class="en-only">Lean UX Canvas (from previous cycle)</span></li>
+          </ul>
+        </td>
+        <td>
+          <ol>
+            <li><strong><span class="ja-only">仮定の宣言と優先順位付け</span><span class="en-only">Declare & Prioritize Assumptions</span></strong><span class="sm"><span class="ja-only">リスクの高い仮定を特定</span><span class="en-only">Identify highest-risk assumptions</span></span></li>
+            <li><strong><span class="ja-only">MVP設計</span><span class="en-only">Design MVP / Experiment</span></strong><span class="sm"><span class="ja-only">最小限のデザイン（スケッチ・ワイヤー）</span><span class="en-only">Minimal design (sketches, wireframes)</span></span></li>
+            <li><strong><span class="ja-only">実験実行（Build）</span><span class="en-only">Run Experiment (Build)</span></strong><span class="sm"><span class="ja-only">プロトタイプまたは実装</span><span class="en-only">Prototype or implementation</span></span></li>
+            <li><strong><span class="ja-only">データ収集（Measure）</span><span class="en-only">Collect Data (Measure)</span></strong><span class="sm"><span class="ja-only">定量・定性データ取得</span><span class="en-only">Quantitative & qualitative data</span></span></li>
+            <li><strong><span class="ja-only">学習・仮定更新（Learn）</span><span class="en-only">Learn & Update (Learn)</span></strong><span class="sm"><span class="ja-only">→ 次サイクルの仮定を更新</span><span class="en-only">→ Update assumptions for next cycle</span></span></li>
+          </ol>
+        </td>
+        <td>
+          <ul>
+            <li><span class="ja-only">Lean UX Canvas（更新版）</span><span class="en-only">Lean UX Canvas (updated)</span></li>
+            <li><span class="ja-only">検証済み／棄却済み仮定リスト</span><span class="en-only">Validated / invalidated assumption list</span></li>
+            <li><span class="ja-only">MVP・実験レポート</span><span class="en-only">MVP & experiment report</span></li>
+            <li><span class="ja-only">更新されたプロダクトバックログ</span><span class="en-only">Updated product backlog</span></li>
+          </ul>
+        </td>
+      </tr></tbody>
+    </table>
+  </div>
+  <div class="uw">
+    <div class="ub uby"><strong>✓ <span class="ja-only">向いている状況</span><span class="en-only">When to Use</span></strong><span class="ja-only">アジャイル開発チームとのUX統合。スタートアップの仮説検証フェーズ。市場適合性が不確かな新機能開発。</span><span class="en-only">Integrating UX with Agile teams. Startup hypothesis validation. New features with uncertain market fit.</span></div>
+    <div class="ub ubn"><strong>✕ <span class="ja-only">向いていない状況</span><span class="en-only">When Not to Use</span></strong><span class="ja-only">成果物の納品が主目的のプロジェクト。規制上の文書化要件が厳格な場合（HCDを使う）。</span><span class="en-only">Projects where deliverable documentation is primary. Strict regulatory documentation requirements (use HCD).</span></div>
+  </div>
+  <div class="cf">
+    <span class="tm">👥 <span class="ja-only">UXデザイナー・エンジニア・PdM（スクラムチーム内）</span><span class="en-only">UX Designer, Engineer, PdM (within Scrum team)</span></span>
+    <a class="cl" href="index.html#s-lean-ux">→ <span class="ja-only">本編で詳しく読む</span><span class="en-only">Read full text</span></a>
+  </div>
+</section>
+
+<!-- 06 Dual-Track Agile -->
+<section class="mc" data-cat="agile" id="ref-dualtrack">
+  <div class="ch">
+    <div class="cnum">06</div>
+    <div class="cm">
+      <div class="ct"><span class="ja-only">Dual-Track Agile（二軌道アジャイル）</span><span class="en-only">Dual-Track Agile</span></div>
+      <div class="cen">Jeff Patton / Marty Cagan — <em>INSPIRED</em></div>
+      <div class="bgs">
+        <span class="bg bgm"><span class="ja-only">アジャイル系</span><span class="en-only">Agile-based</span></span>
+        <span class="bg bgg"><span class="ja-only">全階層（継続的）</span><span class="en-only">All layers (continuous)</span></span>
+        <span class="bg bgd"><span class="ja-only">スプリント単位（継続）</span><span class="en-only">Per sprint (ongoing)</span></span>
+      </div>
+      <div class="cdesc">
+        <span class="ja-only">DiscoveryトラックとDeliveryトラックを並走させ、UXが1〜2スプリント先行して設計を検証するモデル。アジャイルとUXの構造的な摩擦を解消する最も実用的な解決策。</span>
+        <span class="en-only">Runs Discovery and Delivery tracks in parallel, with UX running 1–2 sprints ahead to validate designs. The most practical solution to structural friction between Agile and UX.</span>
+      </div>
+    </div>
+  </div>
+  <div class="ipow">
+    <div class="ipol">INPUT · PROCESS（並走2トラック）· OUTPUT</div>
+    <table class="ipt">
+      <thead><tr><th class="ci">INPUT</th><th class="cp">PROCESS（並走2トラック）</th><th class="co">OUTPUT</th></tr></thead>
+      <tbody><tr>
+        <td>
+          <ul>
+            <li><span class="ja-only">プロダクトバックログ（機能・ユーザーストーリー）</span><span class="en-only">Product backlog (features, user stories)</span></li>
+            <li><span class="ja-only">ユーザーリサーチキュー（未解決の問い）</span><span class="en-only">UX research queue (unresolved questions)</span></li>
+            <li><span class="ja-only">スプリント計画・チームキャパシティ</span><span class="en-only">Sprint plan & team capacity</span></li>
+            <li><span class="ja-only">前スプリントの学習・レトロ知見</span><span class="en-only">Previous sprint learnings & retro insights</span></li>
+          </ul>
+        </td>
+        <td>
+          <div class="trk trk-d">
+            <strong>🔍 Discovery Track <span class="ja-only">（1〜2スプリント先行）</span><span class="en-only">(1–2 sprints ahead)</span></strong>
+            <ol>
+              <li><span class="ja-only">ユーザーインタビュー・テスト</span><span class="en-only">User interviews & testing</span></li>
+              <li><span class="ja-only">プロトタイプ作成・検証</span><span class="en-only">Prototype creation & validation</span></li>
+              <li><span class="ja-only">仕様確定→Deliveryへ渡す</span><span class="en-only">Finalize spec → hand off to Delivery</span></li>
+            </ol>
+          </div>
+          <div class="trk trk-v">
+            <strong>🚀 Delivery Track <span class="ja-only">（実装・リリース）</span><span class="en-only">(implement & release)</span></strong>
+            <ol>
+              <li><span class="ja-only">スプリントプランニング（Discovery成果を反映）</span><span class="en-only">Sprint planning (incorporating Discovery output)</span></li>
+              <li><span class="ja-only">開発実装・QA</span><span class="en-only">Development implementation & QA</span></li>
+              <li><span class="ja-only">リリース</span><span class="en-only">Release</span></li>
+            </ol>
+          </div>
+        </td>
+        <td>
+          <ul>
+            <li><span class="ja-only">検証済みプロトタイプ・デザイン仕様</span><span class="en-only">Validated prototype & design spec</span></li>
+            <li><span class="ja-only">実装済みUI・機能</span><span class="en-only">Implemented UI & features</span></li>
+            <li><span class="ja-only">更新されたデザインバックログ</span><span class="en-only">Updated design backlog</span></li>
+            <li><span class="ja-only">テストサマリーレポート</span><span class="en-only">Test summary report</span></li>
+          </ul>
+        </td>
+      </tr></tbody>
+    </table>
+  </div>
+  <div class="uw">
+    <div class="ub uby"><strong>✓ <span class="ja-only">向いている状況</span><span class="en-only">When to Use</span></strong><span class="ja-only">スクラムチームにUXを統合したい場合。Lean UXでは成果物が不足する場合。</span><span class="en-only">Integrating UX into a Scrum team. When Lean UX produces insufficient deliverables.</span></div>
+    <div class="ub ubn"><strong>✕ <span class="ja-only">向いていない状況</span><span class="en-only">When Not to Use</span></strong><span class="ja-only">UXデザイナーが1人でDiscovery・Deliveryを兼任せざるを得ない少人数チーム。</span><span class="en-only">Small teams where one UX designer must handle both Discovery and Delivery alone.</span></div>
+  </div>
+  <div class="cf">
+    <span class="tm">👥 <span class="ja-only">UXデザイナー（Discovery担当）・エンジニア・PdM</span><span class="en-only">UX Designer (Discovery) + Engineers + PdM (sprint team)</span></span>
+    <a class="cl" href="index.html#s-agile-ux">→ <span class="ja-only">本編で詳しく読む</span><span class="en-only">Read full text</span></a>
+  </div>
+</section>
+
+<!-- ═══════ システム・組織・参加系 ═══════ -->
+<div class="sdiv" data-cat="systems"><span class="ja-only">システム・組織・参加系</span><span class="en-only">Systems / Org / Participatory</span></div>
+
+<!-- 07 Participatory Design -->
+<section class="mc" data-cat="systems" id="ref-pd">
+  <div class="ch">
+    <div class="cnum">07</div>
+    <div class="cm">
+      <div class="ct"><span class="ja-only">参加型デザイン</span><span class="en-only">Participatory Design</span></div>
+      <div class="cen"><span class="ja-only">スカンジナビア発・1970年代〜</span><span class="en-only">Scandinavian origin, 1970s–</span></div>
+      <div class="bgs">
+        <span class="bg bgm"><span class="ja-only">システム・組織</span><span class="en-only">Systems/Org</span></span>
+        <span class="bg bgg"><span class="ja-only">戦略〜構造層</span><span class="en-only">Strategy→Structure</span></span>
+        <span class="bg bgd"><span class="ja-only">プロジェクト全期間</span><span class="en-only">Full project lifecycle</span></span>
+      </div>
+      <div class="cdesc">
+        <span class="ja-only">ユーザー・当事者・コミュニティメンバーを設計チームの一員として参加させる民主的アプローチ。公共サービスや社会的影響の大きいシステムで特に有効。</span>
+        <span class="en-only">Democratic approach including users, stakeholders, and community members as design team members. Especially effective for public services and systems with significant social impact.</span>
+      </div>
+    </div>
+  </div>
+  <div class="ipow">
+    <div class="ipol">INPUT · PROCESS · OUTPUT</div>
+    <table class="ipt">
+      <thead><tr><th class="ci">INPUT</th><th class="cp">PROCESS</th><th class="co">OUTPUT</th></tr></thead>
+      <tbody><tr>
+        <td>
+          <ul>
+            <li><span class="ja-only">参加者の特定・招集計画（ユーザー・当事者・周辺的ユーザー）</span><span class="en-only">Participant identification & recruitment (users, stakeholders, marginal users)</span></li>
+            <li><span class="ja-only">ファシリテーション設計</span><span class="en-only">Facilitation design</span></li>
+            <li><span class="ja-only">プロトタイプ素材（紙・付箋・モック）</span><span class="en-only">Prototyping materials (paper, sticky notes, mockups)</span></li>
+            <li><span class="ja-only">多様性確保の戦略（マイノリティの参加）</span><span class="en-only">Diversity strategy (inclusion of minority voices)</span></li>
+          </ul>
+        </td>
+        <td>
+          <ol>
+            <li><strong><span class="ja-only">参加者招集・チーム組成</span><span class="en-only">Participant Recruitment & Team Formation</span></strong></li>
+            <li><strong><span class="ja-only">コ・デザインセッション</span><span class="en-only">Co-Design Sessions</span></strong><span class="sm"><span class="ja-only">共同プロトタイピング・ワークショップ</span><span class="en-only">Joint prototyping workshops</span></span></li>
+            <li><strong><span class="ja-only">共同評価・フィードバック統合</span><span class="en-only">Joint Evaluation & Feedback Integration</span></strong></li>
+            <li><strong><span class="ja-only">共同意思決定</span><span class="en-only">Shared Decision-Making</span></strong><span class="sm"><span class="ja-only">設計判断を参加者と共に行う</span><span class="en-only">Design decisions made with participants</span></span></li>
+          </ol>
+        </td>
+        <td>
+          <ul>
+            <li><span class="ja-only">共同作成プロトタイプ・スケッチ</span><span class="en-only">Co-created prototypes & sketches</span></li>
+            <li><span class="ja-only">参加者の知見・語りの記録</span><span class="en-only">Participant insights & narratives</span></li>
+            <li><span class="ja-only">要件ドキュメント（参加者の言葉で）</span><span class="en-only">Requirements document (in participants' words)</span></li>
+            <li><span class="ja-only">プロセスドキュメント（誰がどう参加したか）</span><span class="en-only">Process document (who participated and how)</span></li>
+          </ul>
+        </td>
+      </tr></tbody>
+    </table>
+  </div>
+  <div class="uw">
+    <div class="ub uby"><strong>✓ <span class="ja-only">向いている状況</span><span class="en-only">When to Use</span></strong><span class="ja-only">公共サービス・行政・コミュニティ向けサービス。多様な当事者の声が必要な設計。</span><span class="en-only">Public services, government systems, community-focused services requiring diverse stakeholder voices.</span></div>
+    <div class="ub ubn"><strong>✕ <span class="ja-only">向いていない状況</span><span class="en-only">When Not to Use</span></strong><span class="ja-only">参加者の時間的コミットが得られない場合。B2Bなど特定専門家のみが対象のシステム。</span><span class="en-only">When participant time commitment cannot be secured. B2B/specialist-only systems.</span></div>
+  </div>
+  <div class="cf">
+    <span class="tm">👥 <span class="ja-only">ファシリテーター・UXリサーチャー・当事者ユーザー・ステークホルダー</span><span class="en-only">Facilitator, UX Researcher, end users & stakeholders as co-designers</span></span>
+    <a class="cl" href="index.html#s-participatory">→ <span class="ja-only">本編で詳しく読む</span><span class="en-only">Read full text</span></a>
+  </div>
+</section>
+
+<!-- 08 Pattern Language -->
+<section class="mc" data-cat="systems" id="ref-pattern">
+  <div class="ch">
+    <div class="cnum">08</div>
+    <div class="cm">
+      <div class="ct"><span class="ja-only">パターンランゲージ</span><span class="en-only">Pattern Language</span></div>
+      <div class="cen">Christopher Alexander — <em>A Pattern Language</em> (1977)</div>
+      <div class="bgs">
+        <span class="bg bgm"><span class="ja-only">システム・組織</span><span class="en-only">Systems/Org</span></span>
+        <span class="bg bgg"><span class="ja-only">構造〜表層</span><span class="en-only">Structure→Surface</span></span>
+        <span class="bg bgd"><span class="ja-only">長期・継続的蓄積</span><span class="en-only">Long-term, continuous</span></span>
+      </div>
+      <div class="cdesc">
+        <span class="ja-only">繰り返し現れる設計問題とその解決策を「パターン」として体系化・共有する知識管理手法。デザインシステムのコンポーネント定義や組織のデザイン知識体系化に応用される。</span>
+        <span class="en-only">Knowledge management method systematizing recurring design problems and solutions as "patterns." Applied to design system component definition and organizational design knowledge.</span>
+      </div>
+    </div>
+  </div>
+  <div class="ipow">
+    <div class="ipol">INPUT · PROCESS · OUTPUT</div>
+    <table class="ipt">
+      <thead><tr><th class="ci">INPUT</th><th class="cp">PROCESS</th><th class="co">OUTPUT</th></tr></thead>
+      <tbody><tr>
+        <td>
+          <ul>
+            <li><span class="ja-only">繰り返し現れる設計問題の観察・記録</span><span class="en-only">Observations of recurring design problems</span></li>
+            <li><span class="ja-only">成功した設計事例の蓄積</span><span class="en-only">Accumulated successful design cases</span></li>
+            <li><span class="ja-only">既存パターンライブラリ（参照・拡張）</span><span class="en-only">Existing pattern libraries (for reference & extension)</span></li>
+            <li><span class="ja-only">文脈情報（ユーザー環境・技術制約）</span><span class="en-only">Context info (user environment, technical constraints)</span></li>
+          </ul>
+        </td>
+        <td>
+          <ol>
+            <li><strong><span class="ja-only">パターン発見</span><span class="en-only">Pattern Discovery</span></strong><span class="sm"><span class="ja-only">成功事例を体系的に観察・分析</span><span class="en-only">Systematically observe & analyze successes</span></span></li>
+            <li><strong><span class="ja-only">パターン記述</span><span class="en-only">Pattern Documentation</span></strong><span class="sm"><span class="ja-only">名前・問題・文脈・解決策・結果の形式で記述</span><span class="en-only">Document: Name / Problem / Context / Solution / Consequences</span></span></li>
+            <li><strong><span class="ja-only">パターン言語の構築</span><span class="en-only">Build Pattern Language</span></strong><span class="sm"><span class="ja-only">パターン間の関係をネットワーク化</span><span class="en-only">Network patterns and relationships</span></span></li>
+            <li><strong><span class="ja-only">パターンの適用・更新</span><span class="en-only">Apply & Update Patterns</span></strong><span class="sm"><span class="ja-only">新規設計へ照合・適用し、結果でパターンを更新</span><span class="en-only">Match to new problems; update from usage results</span></span></li>
+          </ol>
+        </td>
+        <td>
+          <ul>
+            <li><span class="ja-only">パターンカタログ（名前・問題・文脈・解決策・結果）</span><span class="en-only">Pattern catalog (Name, Problem, Context, Solution, Consequences)</span></li>
+            <li><span class="ja-only">パターン言語マップ（関係図）</span><span class="en-only">Pattern language map (relationship diagram)</span></li>
+            <li><span class="ja-only">デザインシステムのコンポーネント定義</span><span class="en-only">Design system component definitions</span></li>
+            <li><span class="ja-only">デザインガイドライン・スタイルガイド</span><span class="en-only">Design guidelines & style guide</span></li>
+          </ul>
+        </td>
+      </tr></tbody>
+    </table>
+  </div>
+  <div class="uw">
+    <div class="ub uby"><strong>✓ <span class="ja-only">向いている状況</span><span class="en-only">When to Use</span></strong><span class="ja-only">デザインシステム構築。組織のデザイン知識体系化。複数チーム・プロダクトで一貫性を保ちたい場合。</span><span class="en-only">Building a design system. Systematizing org design knowledge. Consistency across multiple teams/products.</span></div>
+    <div class="ub ubn"><strong>✕ <span class="ja-only">向いていない状況</span><span class="en-only">When Not to Use</span></strong><span class="ja-only">単発プロジェクト。継続的な知識更新に投資できない組織。</span><span class="en-only">One-off projects. Organizations unable to invest in ongoing knowledge updates.</span></div>
+  </div>
+  <div class="cf">
+    <span class="tm">👥 <span class="ja-only">デザインシステムチーム・シニアUXデザイナー・アーキテクト</span><span class="en-only">Design system team, Senior UX designer, Architect</span></span>
+    <a class="cl" href="index.html#s-pattern-language">→ <span class="ja-only">本編で詳しく読む</span><span class="en-only">Read full text</span></a>
+  </div>
+</section>
+
+<!-- 09 Waterfall + UX -->
+<section class="mc" data-cat="systems" id="ref-waterfall">
+  <div class="ch">
+    <div class="cnum">09</div>
+    <div class="cm">
+      <div class="ct"><span class="ja-only">ウォーターフォール + UX</span><span class="en-only">Waterfall + UX</span></div>
+      <div class="cen"><span class="ja-only">規制産業・大規模フェーズ型開発</span><span class="en-only">Regulated industries & large-scale phased development</span></div>
+      <div class="bgs">
+        <span class="bg bgm"><span class="ja-only">システム・組織</span><span class="en-only">Systems/Org</span></span>
+        <span class="bg bgg"><span class="ja-only">全階層（順次）</span><span class="en-only">All layers (sequential)</span></span>
+        <span class="bg bgd"><span class="ja-only">プロジェクト全期間（フェーズ固定）</span><span class="en-only">Full project (fixed phases)</span></span>
+      </div>
+      <div class="cdesc">
+        <span class="ja-only">要件定義→設計→実装→テストの逐次フェーズでUXを関与させるモデル。医療機器・航空・公共調達など要件が安定した規制産業で有効。IEC 62366などの規制準拠UXプロセスと整合する。</span>
+        <span class="en-only">UX involvement in sequential Requirements → Design → Implementation → Test phases. Effective in regulated industries (medical devices, aviation, public procurement) with stable requirements. Aligns with IEC 62366 and similar regulatory UX processes.</span>
+      </div>
+    </div>
+  </div>
+  <div class="ipow">
+    <div class="ipol">INPUT · PROCESS · OUTPUT</div>
+    <table class="ipt">
+      <thead><tr><th class="ci">INPUT</th><th class="cp">PROCESS</th><th class="co">OUTPUT</th></tr></thead>
+      <tbody><tr>
+        <td>
+          <ul>
+            <li><span class="ja-only">ビジネス要件書・RFP</span><span class="en-only">Business requirements document / RFP</span></li>
+            <li><span class="ja-only">予算・スケジュール制約</span><span class="en-only">Budget & schedule constraints</span></li>
+            <li><span class="ja-only">規制・コンプライアンス要件</span><span class="en-only">Regulatory & compliance requirements</span></li>
+            <li><span class="ja-only">ステークホルダー承認プロセス</span><span class="en-only">Stakeholder approval process</span></li>
+          </ul>
+        </td>
+        <td>
+          <ol>
+            <li><strong><span class="ja-only">要件定義フェーズ</span><span class="en-only">Requirements Phase</span></strong><span class="sm"><span class="ja-only">UXリサーチ・ペルソナ・ユーザーストーリー・受け入れ基準</span><span class="en-only">UX research, personas, user stories, acceptance criteria</span></span></li>
+            <li><strong><span class="ja-only">設計フェーズ</span><span class="en-only">Design Phase</span></strong><span class="sm"><span class="ja-only">IA・ワイヤーフレーム・プロトタイプ・フォーマティブ評価</span><span class="en-only">IA, wireframes, prototypes, formative evaluation</span></span></li>
+            <li><strong><span class="ja-only">実装フェーズ</span><span class="en-only">Implementation Phase</span></strong><span class="sm"><span class="ja-only">UI仕様書・スタイルガイド伝達・デザインレビュー</span><span class="en-only">UI spec handoff, style guide, design reviews</span></span></li>
+            <li><strong><span class="ja-only">テストフェーズ</span><span class="en-only">Test Phase</span></strong><span class="sm"><span class="ja-only">受け入れテスト・サマティブ評価（規制産業）</span><span class="en-only">Acceptance testing, summative evaluation (regulated)</span></span></li>
+          </ol>
+        </td>
+        <td>
+          <ul>
+            <li><span class="ja-only">UX要件定義書・ユーザーストーリー集</span><span class="en-only">UX requirements doc & user story collection</span></li>
+            <li><span class="ja-only">ワイヤーフレーム・プロトタイプ</span><span class="en-only">Wireframes & prototypes</span></li>
+            <li><span class="ja-only">UI仕様書・スタイルガイド</span><span class="en-only">UI specification & style guide</span></li>
+            <li><span class="ja-only">ユーザビリティ評価レポート（フォーマティブ・サマティブ）</span><span class="en-only">Usability evaluation report (formative & summative)</span></li>
+          </ul>
+        </td>
+      </tr></tbody>
+    </table>
+  </div>
+  <div class="uw">
+    <div class="ub uby"><strong>✓ <span class="ja-only">向いている状況</span><span class="en-only">When to Use</span></strong><span class="ja-only">規制準拠が必要な医療機器・航空・金融・公共調達。要件が安定しており変更が少ないシステム。</span><span class="en-only">Medical devices, aviation, finance, public procurement requiring regulatory compliance. Systems with stable, low-change requirements.</span></div>
+    <div class="ub ubn"><strong>✕ <span class="ja-only">向いていない状況</span><span class="en-only">When Not to Use</span></strong><span class="ja-only">要件が不確かな新規プロダクト。市場反応を見ながら反復したいデジタルプロダクト。</span><span class="en-only">New products with uncertain requirements. Digital products requiring iterative market feedback.</span></div>
+  </div>
+  <div class="cf">
+    <span class="tm">👥 <span class="ja-only">UXデザイナー・リサーチャー・PdM・QAエンジニア・規制アフェアーズ担当</span><span class="en-only">UX Designer, Researcher, PdM, QA Engineer, Regulatory Affairs</span></span>
+    <a class="cl" href="index.html#s-waterfall-ux">→ <span class="ja-only">本編で詳しく読む</span><span class="en-only">Read full text</span></a>
+  </div>
+</section>
+
+</div><!-- /wrap -->
+
+<footer>
+  <p><a href="index.html">← UI/UX Atlas</a> &nbsp;·&nbsp; ©2026 KAJI — CC BY-NC-SA 4.0</p>
+</footer>
+
+<script>
+function setLang(lang){
+  document.body.lang=lang;
+  document.querySelectorAll('.lb').forEach(b=>b.classList.remove('on'));
+  document.querySelector(`.lb[onclick="setLang('${lang}')"]`).classList.add('on');
+}
+function filter(cat,btn){
+  document.querySelectorAll('.fb').forEach(b=>b.classList.remove('on'));
+  btn.classList.add('on');
+  document.querySelectorAll('.mc').forEach(c=>{
+    c.classList.toggle('hidden', cat!=='all' && c.dataset.cat!==cat);
+  });
+  document.querySelectorAll('.sdiv').forEach(d=>{
+    d.style.display = cat==='all' ? '' : 'none';
+  });
+}
+</script>
+</body>
+</html>

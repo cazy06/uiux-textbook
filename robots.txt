@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+# Sitemap (update URL after GitHub Pages setup)
+# Sitemap: https://[username].github.io/[repo-name]/sitemap.xml

@@ -1,0 +1,982 @@
+<!DOCTYPE html>
+<html lang="ja" id="root">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>UI/UX Historical Case Studies — Garrett's 5-Plane Model — UI/UX Design Textbook</title>
+<style>
+:root{
+  --bg:#fdfcf9;--surface:#fff;--border:#e8e4dd;
+  --text:#1a1714;--sub:#6b6560;--accent:#2c5f8a;--accent-l:#e8f0f8;
+  --l1:#1e6b4a;--l2:#2c5f8a;--l3:#7b3fa0;--l4:#c4600a;--l5:#b83232;
+  --font-b:'Hiragino Kaku Gothic ProN','Noto Sans JP',sans-serif;
+  --font-h:'Hiragino Mincho ProN','Noto Serif JP',Georgia,serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--font-b);background:var(--bg);color:var(--text);line-height:1.85;font-size:16px}
+#sidebar{position:fixed;top:0;left:0;width:268px;height:100vh;background:var(--surface);border-right:1px solid var(--border);overflow-y:auto;z-index:100}
+#sh{padding:16px;border-bottom:1px solid var(--border)}
+#sh a{text-decoration:none;font-size:11px;color:var(--accent);font-weight:700}
+#sh .bt{font-size:13px;font-weight:700;color:var(--text);margin-top:6px;font-family:var(--font-h)}
+#toc{padding:8px 0 30px}
+#toc a{display:block;padding:5px 16px;font-size:12px;color:var(--sub);text-decoration:none;transition:all .15s}
+#toc a:hover{background:var(--accent-l);color:var(--accent)}
+.tp{font-size:10.5px;font-weight:700;letter-spacing:.06em;padding:12px 16px 3px;margin-top:4px}
+#main{margin-left:268px;max-width:920px;padding:50px 60px 120px}
+h1{font-family:var(--font-h);font-size:2rem;margin-bottom:8px}
+.lead{color:var(--sub);margin-bottom:16px;font-size:.95rem}
+/* Layer header */
+.lh{padding:22px 26px;margin:48px 0 28px;border-radius:10px;display:flex;align-items:center;gap:20px}
+.lh .ln{font-size:2.4rem;font-weight:800;color:rgba(255,255,255,.25);line-height:1;min-width:48px}
+.lh .lt{color:#fff}
+.lh .lt .num{font-size:.75rem;font-weight:700;letter-spacing:.1em;opacity:.8;margin-bottom:3px}
+.lh .lt h2{font-family:var(--font-h);font-size:1.3rem;line-height:1.3}
+.lh .lt p{font-size:.82rem;opacity:.85;margin-top:4px}
+/* Case card */
+.case{background:var(--surface);border:1px solid var(--border);border-radius:10px;margin-bottom:44px;overflow:hidden}
+.case-head{padding:18px 24px 14px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:flex-start;gap:16px}
+.case-head .meta .tags{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:7px}
+.tag{font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:3px 9px;border-radius:20px;display:inline-block}
+.case-head h2{font-family:var(--font-h);font-size:1.2rem;line-height:1.4}
+.year{font-size:2rem;font-weight:800;color:var(--border);line-height:1;min-width:72px;text-align:right;white-space:nowrap}
+.case-body{display:grid;grid-template-columns:240px 1fr}
+.case-img{border-right:1px solid var(--border);padding:20px;display:flex;flex-direction:column;align-items:center;justify-content:center;background:#f7f5f1;min-height:180px}
+.case-img img{max-width:100%;max-height:190px;object-fit:contain}
+.case-img .cap{font-size:.68rem;color:var(--sub);margin-top:8px;text-align:center;line-height:1.4}
+.case-text{padding:18px 22px}
+.case-text h3{font-size:.78rem;font-weight:700;color:var(--accent);margin:14px 0 5px;text-transform:uppercase;letter-spacing:.06em}
+.case-text h3:first-child{margin-top:0}
+.case-text p,.case-text li{font-size:.87rem;line-height:1.72}
+.case-text ul{margin-left:1.2em;margin-bottom:8px}
+.lesson{background:var(--accent-l);border-left:4px solid var(--accent);padding:10px 14px;margin:10px 0;border-radius:0 5px 5px 0;font-size:.83rem}
+.lesson strong{display:block;font-size:.72rem;text-transform:uppercase;letter-spacing:.05em;color:var(--accent);margin-bottom:3px}
+.layer-map{background:#f9f7f4;border:1px solid var(--border);border-radius:6px;padding:10px 14px;margin:10px 0;font-size:.82rem}
+.layer-map strong{display:block;font-size:.72rem;text-transform:uppercase;letter-spacing:.05em;color:var(--sub);margin-bottom:6px}
+.layer-map .layers{display:flex;gap:6px;flex-wrap:wrap}
+.layer-map .layer-tag{padding:3px 10px;border-radius:3px;font-size:.72rem;font-weight:700;color:#fff}
+.cite{font-size:.72rem;color:var(--sub);border-top:1px solid var(--border);padding:8px 22px;background:#f7f5f1;line-height:1.6}
+table{width:100%;border-collapse:collapse;margin:16px 0;font-size:.85rem}
+th{background:var(--accent);color:#fff;padding:8px 12px;text-align:left}
+td{padding:8px 12px;border-bottom:1px solid var(--border)}
+tr:nth-child(even) td{background:#f7f5f1}
+section.layer-sec{margin-bottom:20px}
+h2.sh{font-family:var(--font-h);font-size:1.35rem;border-bottom:2px solid var(--border);padding-bottom:8px;margin:40px 0 20px}
+footer{border-top:2px solid var(--border);padding:24px 0;text-align:center;color:var(--sub);font-size:.8rem;margin-top:60px}
+@media(max-width:860px){#sidebar{display:none}#main{margin-left:0;padding:24px 16px 80px}.case-body{grid-template-columns:1fr}.case-img{border-right:none;border-bottom:1px solid var(--border)}}
+
+/* ── Bilingual ── */
+.ja-only{display:inline}.en-only{display:none}
+[lang=en] .ja-only{display:none!important}[lang=en] .en-only{display:inline!important}
+[lang=ja] .en-only{display:none!important}
+/* SVG lang text */
+[lang=en] .jt{display:none}[lang=en] .et{display:block}
+[lang=ja] .et{display:none}
+/* Toolbar */
+#toolbar{position:fixed;top:10px;right:14px;z-index:200;display:flex;gap:8px;align-items:center}
+.tb-btn{background:#fff;border:1.5px solid var(--border);color:var(--sub);font-size:11.5px;font-weight:700;padding:5px 10px;border-radius:20px;cursor:pointer;transition:all .2s;letter-spacing:.04em;font-family:var(--font-b)}
+.tb-btn:hover{background:var(--accent);color:#fff;border-color:var(--accent)}
+.tb-btn.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+</style>
+</head>
+<body>
+<nav id="sidebar">
+<div id="sh">
+  <a href="index.html"><span class="ja-only">← 教科書トップへ戻る</span><span class="en-only">← Back to Textbook</span></a>
+  <div class="bt"><span class="ja-only">UI/UX 事例集</span><span class="en-only">UI/UX Case Studies</span><br><span class="ja-only">ギャレットの5レイヤーで読む</span><span class="en-only">Garrett's 5-Plane Model</span></div>
+</div>
+<div id="toc">
+<a href="#intro"><span class="ja-only">はじめに：レイヤーと事例の対応</span><span class="en-only">Introduction: Layers & Cases</span></a>
+<div class="tp" style="color:var(--l1)"><span class="ja-only">第1層｜戦略層</span><span class="en-only">Layer 1 | Strategy</span></div>
+<a href="#s1"><span class="ja-only">Airbnb：写真戦略がPMFを生んだ</span><span class="en-only">Airbnb: Photos That Created PMF</span></a>
+<a href="#s2"><span class="ja-only">GE MRI：共感から問いを立て直す</span><span class="en-only">GE MRI: Reframing Through Empathy</span></a>
+<a href="#s3"><span class="ja-only">IBM：全社UX戦略の変革</span><span class="en-only">IBM: Company-Wide UX Transformation</span></a>
+<div class="tp" style="color:var(--l2)"><span class="ja-only">第2層｜要件層</span><span class="en-only">Layer 2 | Scope</span></div>
+<a href="#sc1"><span class="ja-only">GOV.UK：コンテンツを85%削減</span><span class="en-only">GOV.UK: 85% Content Reduction</span></a>
+<a href="#sc2"><span class="ja-only">BofA Keep the Change：行動インサイトを要件に</span><span class="en-only">BofA Keep the Change: Behavior as Requirements</span></a>
+<div class="tp" style="color:var(--l3)"><span class="ja-only">第3層｜構造層</span><span class="en-only">Layer 3 | Structure</span></div>
+<a href="#st1"><span class="ja-only">Amazon 1-Click：購入フローのIA革命</span><span class="en-only">Amazon 1-Click: IA Revolution in Purchase Flow</span></a>
+<a href="#st2"><span class="ja-only">GOV.UK IA：タスクベースのナビゲーション</span><span class="en-only">GOV.UK IA: Task-Based Navigation</span></a>
+<div class="tp" style="color:var(--l4)"><span class="ja-only">第4層｜骨格層</span><span class="en-only">Layer 4 | Skeleton</span></div>
+<a href="#sk1"><span class="ja-only">iPhone：物理UIを廃したインターフェース設計</span><span class="en-only">iPhone: Eliminating Physical UI Constraints</span></a>
+<a href="#sk2"><span class="ja-only">Material Design：コンポーネントの骨格標準化</span><span class="en-only">Material Design: Skeleton Standardization</span></a>
+<div class="tp" style="color:var(--l5)"><span class="ja-only">第5層｜表層</span><span class="en-only">Layer 5 | Surface</span></div>
+<a href="#su1"><span class="ja-only">Apple Macintosh：視覚言語の誕生</span><span class="en-only">Apple Macintosh: Birth of Visual Language</span></a>
+<a href="#su2"><span class="ja-only">Google検索：余白という表層戦略</span><span class="en-only">Google Search: Whitespace as Surface Strategy</span></a>
+<a href="#su3"><span class="ja-only">Material You：Dynamic Colorの表層革新</span><span class="en-only">Material You: Dynamic Color Innovation</span></a>
+<div class="tp"><span class="ja-only">年表・比較</span><span class="en-only">Timeline & Comparison</span></div>
+<a href="#timeline"><span class="ja-only">UI/UX 60年の歩み</span><span class="en-only">60 Years of UI/UX Design</span></a>
+<a href="#matrix"><span class="ja-only">事例 × レイヤー マトリクス</span><span class="en-only">Case × Layer Matrix</span></a>
+</div>
+</nav>
+<main id="main">
+<h1><span class="ja-only">UI/UX 歴史的事例集</span><span class="en-only">UI/UX Historical Case Studies</span></h1>
+<p class="lead"><span class="ja-only">ギャレットの5レイヤーモデル（戦略・要件・構造・骨格・表層）で歴史的事例を読み解く。</span><span class="en-only">Reading historical cases through Garrett's 5-Plane Model (Strategy, Scope, Structure, Skeleton, Surface).</span></p>
+<!-- INTRO MAP -->
+<section id="intro">
+<h2 class="sh"><span class="ja-only">はじめに：5レイヤーと事例の対応関係</span><span class="en-only">Introduction: 5 Planes and Their Cases</span></h2>
+<p style="font-size:.9rem;margin-bottom:16px"><span class="ja-only">各事例は複数のレイヤーにまたがるが、<strong>最もデザイン判断が集中したレイヤー</strong>を主層として分類した。右の「レイヤーマップ」で関与する全層を示す。</span><span class="en-only">Each case spans multiple layers, but is classified by the layer where <strong>design decisions were most concentrated</strong>. The "Layer Map" shows all layers involved.</span></p>
+<table>
+<thead><tr><th><span class="ja-only">レイヤー</span><span class="en-only">Layer</span></th><th><span class="ja-only">問い</span><span class="en-only">Question</span></th><th><span class="ja-only">代表事例</span><span class="en-only">Key Cases</span></th><th><span class="ja-only">UXへの影響</span><span class="en-only">UX Impact</span></th></tr></thead>
+<tbody>
+<tr><td style="color:var(--l1);font-weight:700"><span class="ja-only">① 戦略層</span><span class="en-only">① Strategy</span></td><td><span class="ja-only">なぜ作るか？誰のために？</span><span class="en-only">Why build it? For whom?</span></td><td>Airbnb / GE MRI / IBM</td><td><span class="ja-only">PMF・共感・組織変革</span><span class="en-only">PMF · Empathy · Org. Transformation</span></td></tr>
+<tr><td style="color:var(--l2);font-weight:700"><span class="ja-only">② 要件層</span><span class="en-only">② Scope</span></td><td><span class="ja-only">何を作るか？何を削るか？</span><span class="en-only">What to build? What to cut?</span></td><td>GOV.UK / BofA</td><td><span class="ja-only">コンテンツ削減・行動要件</span><span class="en-only">Content Reduction · Behavioral Requirements</span></td></tr>
+<tr><td style="color:var(--l3);font-weight:700"><span class="ja-only">③ 構造層</span><span class="en-only">③ Structure</span></td><td><span class="ja-only">どう組み立てるか？</span><span class="en-only">How to organize it?</span></td><td>Amazon 1-Click / GOV.UK IA</td><td><span class="ja-only">IA・フロー設計</span><span class="en-only">IA · Flow Design</span></td></tr>
+<tr><td style="color:var(--l4);font-weight:700"><span class="ja-only">④ 骨格層</span><span class="en-only">④ Skeleton</span></td><td><span class="ja-only">どう配置・操作させるか？</span><span class="en-only">How to arrange and enable interaction?</span></td><td>iPhone / Material Design</td><td><span class="ja-only">タッチUI・コンポーネント</span><span class="en-only">Touch UI · Components</span></td></tr>
+<tr><td style="color:var(--l5);font-weight:700"><span class="ja-only">⑤ 表層</span><span class="en-only">⑤ Surface</span></td><td><span class="ja-only">どう見せるか？</span><span class="en-only">How should it look and feel?</span></td><td>Macintosh / Google / Material You</td><td><span class="ja-only">視覚言語・カラー・余白</span><span class="en-only">Visual Language · Color · Whitespace</span></td></tr>
+</tbody>
+</table>
+</section>
+
+<!-- ===== 第1層：戦略層 ===== -->
+<section class="layer-sec" id="layer1">
+<div class="lh" style="background:var(--l1)">
+  <div class="ln">1</div>
+  <div class="lt">
+    <div class="num">Layer 1 — Strategy Plane</div>
+    <h2><span class="ja-only">戦略層の事例</span><span class="en-only">Strategy Plane Cases</span></h2>
+    <p><span class="ja-only">「なぜ作るか・誰のために作るか」という問いに対してデザインが答えた事例。ユーザーインサイトが事業戦略そのものを変えた瞬間を読む。</span><span class="en-only">Cases where design answered the question "Why build this — and for whom?" Moments when user insights transformed business strategy itself.</span></p>
+  </div>
+</div>
+
+<!-- Airbnb -->
+<div class="case" id="s1">
+<div class="case-head">
+<div class="meta">
+  <div class="tags">
+    <span class="tag" style="background:#e8f5e9;color:var(--l1)"><span class="ja-only">戦略層 主</span><span class="en-only">Strategy: Primary</span></span>
+    <span class="tag" style="background:#f5f5f5;color:#666"><span class="ja-only">表層 副</span><span class="en-only">Surface: Secondary</span></span>
+    <span class="tag" style="background:#fff8e1;color:#8a6000">Lean UX</span>
+  </div>
+  <h2><span class="ja-only">Airbnb ——「写真1枚」がプロダクトマーケットフィットを生んだ</span><span class="en-only">Airbnb — How One Photo Created Product-Market Fit</span></h2>
+</div>
+<div class="year">2009</div>
+</div>
+<div class="case-body">
+<div class="case-img">
+<svg viewBox="0 0 220 200" xmlns="http://www.w3.org/2000/svg" style="width:100%">
+  <rect width="220" height="200" fill="#fff"/>
+  <!-- Before card -->
+  <rect x="8" y="16" width="90" height="80" rx="6" fill="#f0f0f0" stroke="#ccc"/>
+  <rect x="8" y="16" width="90" height="48" rx="6" fill="#d0d0d0"/>
+  <text x="20" y="42" font-size="8" fill="#999" font-family="Arial">📷 暗い写真…</text>
+  <text x="53" y="75" text-anchor="middle" font-size="9" fill="#333" font-family="Arial">$80/泊</text>
+  <text x="53" y="88" text-anchor="middle" font-size="8" fill="#c00" font-family="Arial">✗ 予約されない</text>
+  <text x="53" y="104" text-anchor="middle" font-size="8" fill="#999">Before</text>
+  <!-- Arrow -->
+  <text x="110" y="70" text-anchor="middle" font-size="16" fill="#ccc">→</text>
+  <!-- After card -->
+  <rect x="122" y="16" width="90" height="80" rx="6" fill="#fce4ec" stroke="#f48fb1"/>
+  <rect x="122" y="16" width="90" height="48" rx="6" fill="#FF5A5F"/>
+  <text x="136" y="42" font-size="8" fill="rgba(255,255,255,.9)" font-family="Arial">🏠 プロ撮影</text>
+  <text x="167" y="75" text-anchor="middle" font-size="9" fill="#333" font-family="Arial">$80/泊</text>
+  <text x="167" y="88" text-anchor="middle" font-size="8" fill="var(--l1)" font-family="Arial">✓ 予約2〜3倍</text>
+  <text x="167" y="104" text-anchor="middle" font-size="8" fill="#999">After</text>
+  <!-- Insight box -->
+  <rect x="8" y="116" width="204" height="68" rx="6" fill="#e8f5e9" stroke="#a5d6a7"/>
+  <text x="110" y="132" text-anchor="middle" font-size="10" fill="var(--l1)" font-weight="bold" font-family="Arial">戦略インサイト</text>
+  <text x="110" y="148" text-anchor="middle" font-size="9" fill="#444" font-family="Arial">ユーザーは「部屋」を借りるのではなく</text>
+  <text x="110" y="162" text-anchor="middle" font-size="9" fill="#444" font-family="Arial">「体験への期待感」を買う</text>
+  <text x="110" y="178" text-anchor="middle" font-size="8" fill="#888" font-family="Arial">→ 写真品質 ＝ 戦略的差別化要因</text>
+</svg>
+<p class="cap"><span class="ja-only">概念図 ©2026 KAJI<br>Airbnb, Inc.の商標・著作権は同社に帰属</span><span class="en-only">Conceptual diagram ©2026 KAJI<br>Airbnb, Inc. trademarks/copyrights belong to Airbnb, Inc.</span></p>
+</div>
+<div class="case-text">
+  <h3><span class="ja-only">戦略的問い</span><span class="en-only">The Strategic Question</span></h3>
+  <p><span class="ja-only">2009年、月収数百ドルで伸び悩むAirbnb。Paul Grahamの「なぜ予約が入らないか」という問いに対し、創業者が現地調査（ニューヨーク）で発見したのは<strong>「写真が暗くて信頼できない」</strong>という根本原因だった。</span><span class="en-only">In 2009, Airbnb was stagnating with monthly revenue of only a few hundred dollars. When Paul Graham asked "why aren't people booking?", the founders went on-site to New York and discovered the root cause: <strong>"the photos are dark and untrustworthy."</strong></span></p>
+  <h3><span class="ja-only">戦略的介入：スケールしないことをする</span><span class="en-only">Strategic Intervention: Do Things That Don't Scale</span></h3>
+  <p><span class="ja-only">創業者自らがカメラを持ちホストを訪問。プロカメラマンを手配し物件を撮り直した。これは「スケールしないアクション（do things that don't scale）」だが、翌週のニューヨーク売上が2〜3倍に。</span><span class="en-only">The founders personally visited hosts with cameras and arranged professional photographers to reshoot listings. A classic "do things that don't scale" action — but New York revenue doubled or tripled the following week.</span></p>
+  <h3><span class="ja-only">戦略層のレッスン</span><span class="en-only">Strategy Plane Lessons</span></h3>
+  <ul>
+    <li><span class="ja-only">ユーザーリサーチ（現地観察）が戦略の誤りを修正した</span><span class="en-only">User research (on-site observation) corrected a strategic error</span></li>
+    <li><span class="ja-only">「サービス品質」の定義をUI改善でなく<strong>コンテンツ品質</strong>に再定義</span><span class="en-only">Redefined "service quality" from UI improvement to <strong>content quality</strong></span></li>
+    <li><span class="ja-only">マーケットプレイスでは<strong>供給側（ホスト）のUX改善 = 需要側の体験向上</strong></span><span class="en-only">In a marketplace, <strong>improving the supply side (host) UX = improving the demand side experience</strong></span></li>
+  </ul>
+  <div class="layer-map">
+    <strong><span class="ja-only">関与レイヤー</span><span class="en-only">Layers Involved</span></strong>
+    <div class="layers">
+      <span class="layer-tag" style="background:var(--l1)"><span class="ja-only">戦略：ユーザーニーズの再定義</span><span class="en-only">Strategy: Redefining User Needs</span></span>
+      <span class="layer-tag" style="background:var(--l5)"><span class="ja-only">表層：写真品質の視覚的信頼性</span><span class="en-only">Surface: Visual Credibility of Photo Quality</span></span>
+    </div>
+  </div>
+  <div class="lesson"><strong><span class="ja-only">UXの教訓</span><span class="en-only">UX Lesson</span></strong><span class="ja-only">「データを見る前に現地へ行け」。エスノグラフィー的観察が、A/Bテストでは見えない「信頼の欠如」というRoot Causeを露わにした。（参照：第1章 コンテクスチュアルインクワイアリー）</span><span class="en-only">"Go to the field before looking at data." Ethnographic observation revealed a root cause — "lack of trust" — that A/B tests could never surface. (Ref: Ch.1 Contextual Inquiry)</span></div>
+</div>
+</div>
+<div class="cite">Gallagher, L. (2017). <em>The Airbnb Story</em>. Houghton Mifflin. / Graham, P. (2013). Do Things that Don't Scale. paulgraham.com / Gebbia, J. (2016). TED: How Airbnb designs for trust.</div>
+</div>
+
+<!-- GE MRI -->
+<div class="case" id="s2">
+<div class="case-head">
+<div class="meta">
+  <div class="tags">
+    <span class="tag" style="background:#e8f5e9;color:var(--l1)"><span class="ja-only">戦略層 主</span><span class="en-only">Strategy: Primary</span></span>
+    <span class="tag" style="background:#f5f5f5;color:#666"><span class="ja-only">構造層 副</span><span class="en-only">Structure: Secondary</span></span>
+    <span class="tag" style="background:#e8f0ff;color:#2c4a8a"><span class="ja-only">デザイン思考</span><span class="en-only">Design Thinking</span></span>
+  </div>
+  <h2><span class="ja-only">GE「Adventure Series」——問いの再定義が体験を変えた</span><span class="en-only">GE 'Adventure Series' — Reframing the Question Changed the Experience</span></h2>
+</div>
+<div class="year">2007</div>
+</div>
+<div class="case-body">
+<div class="case-img">
+<svg viewBox="0 0 220 200" xmlns="http://www.w3.org/2000/svg" style="width:100%">
+  <rect width="220" height="200" fill="#fff"/>
+  <!-- MRI machine: Before -->
+  <rect x="10" y="20" width="88" height="64" rx="6" fill="#e0e0e0" stroke="#bbb"/>
+  <rect x="24" y="32" width="60" height="40" rx="20" fill="#cfcfcf" stroke="#aaa"/>
+  <rect x="38" y="40" width="32" height="24" rx="2" fill="#bbb"/>
+  <text x="54" y="96" text-anchor="middle" font-size="8" fill="#c00" font-family="Arial">😰 怖い機械</text>
+  <text x="54" y="108" text-anchor="middle" font-size="7" fill="#999" font-family="Arial">鎮静剤必要→コスト高</text>
+  <!-- Arrow -->
+  <text x="112" y="60" text-anchor="middle" font-size="14" fill="#ccc">→</text>
+  <!-- After: Adventure MRI -->
+  <rect x="126" y="20" width="88" height="64" rx="6" fill="#e3f2fd" stroke="#90caf9"/>
+  <rect x="140" y="32" width="60" height="40" rx="20" fill="#1565C0" stroke="#0d47a1"/>
+  <rect x="154" y="40" width="32" height="24" rx="2" fill="#1976D2"/>
+  <text x="146" y="32" font-size="8" fill="#FFD700">⭐</text>
+  <text x="198" y="32" font-size="8" fill="#FFD700">🚀</text>
+  <text x="168" y="96" text-anchor="middle" font-size="8" fill="var(--l1)" font-family="Arial">😊 海賊船の冒険！</text>
+  <text x="168" y="108" text-anchor="middle" font-size="7" fill="#999" font-family="Arial">鎮静剤大幅削減</text>
+  <!-- Reframe box -->
+  <rect x="10" y="120" width="200" height="68" rx="6" fill="#f3e5f5" stroke="#ce93d8"/>
+  <text x="110" y="136" text-anchor="middle" font-size="9" fill="#6a1b9a" font-weight="bold" font-family="Arial">問いの再定義（Reframing）</text>
+  <text x="110" y="152" text-anchor="middle" font-size="8.5" fill="#555" font-family="Arial">❌「いかに静止させるか」（技術的問い）</text>
+  <text x="110" y="168" text-anchor="middle" font-size="8.5" fill="var(--l1)" font-family="Arial">✅「いかに楽しい体験にするか」（UX的問い）</text>
+  <text x="110" y="182" text-anchor="middle" font-size="8" fill="#888" font-family="Arial">→ 部屋・床・天井・スタッフの言葉まで設計</text>
+</svg>
+<p class="cap"><span class="ja-only">GE Adventure Series 概念図 ©2026 KAJI<br>GE HealthCareの商標・著作権は同社に帰属</span><span class="en-only">GE Adventure Series conceptual diagram ©2026 KAJI<br>GE HealthCare trademarks/copyrights belong to GE HealthCare</span></p>
+</div>
+<div class="case-text">
+  <h3><span class="ja-only">戦略的問いの転換</span><span class="en-only">Shifting the Strategic Question</span></h3>
+  <p><span class="ja-only">GEデザイナーDoug Dietzが病院訪問時、MRI前に泣く子どもを目撃。当時の問いは「いかに精度を上げるか」だったが、彼はスタンフォードd.schoolのデザイン思考研修後、問いを<strong>「いかに子どもたちにとって怖くない体験にするか」</strong>に再定義した。</span><span class="en-only">GE designer Doug Dietz witnessed a child crying before an MRI scan. The original question was "how do we improve image quality?" — but after attending Stanford d.school, he reframed it: <strong>"how do we make this a non-scary experience for children?"</strong></span></p>
+  <h3><span class="ja-only">共感フェーズ（Empathize）</span><span class="en-only">Empathy Phase</span></h3>
+  <ul>
+    <li><span class="ja-only">子どもへのインタビュー：「宇宙・海・ジャングルの冒険」が好きだと判明</span><span class="en-only">Child interviews revealed they love "space, ocean, and jungle adventures"</span></li>
+    <li><span class="ja-only">MRI機械を「海賊船」「宇宙船」「密林探検の乗り物」として再デザイン</span><span class="en-only">MRI machines redesigned as "pirate ships," "spaceships," and "jungle expedition vehicles"</span></li>
+    <li><span class="ja-only">部屋全体・床・天井・壁・スタッフのセリフまでをシステムとして設計</span><span class="en-only">The entire room — floor, ceiling, walls, and staff scripts — designed as a holistic system</span></li>
+  </ul>
+  <h3><span class="ja-only">成果</span><span class="en-only">Results</span></h3>
+  <p><span class="ja-only">Pittsburgh子ども病院での鎮静剤投与率が大幅低下。患者満足度がトップ評価へ。病院の収益性も改善（鎮静処置コスト削減）。</span><span class="en-only">Sedation rates at Pittsburgh Children's Hospital dropped dramatically. Patient satisfaction reached top ratings. Hospital profitability improved through reduced sedation procedure costs.</span></p>
+  <div class="layer-map">
+    <strong><span class="ja-only">関与レイヤー</span><span class="en-only">Layers Involved</span></strong>
+    <div class="layers">
+      <span class="layer-tag" style="background:var(--l1)"><span class="ja-only">戦略：問いの再定義・共感調査</span><span class="en-only">Strategy: Reframing the Question & Empathy Research</span></span>
+      <span class="layer-tag" style="background:var(--l3)"><span class="ja-only">構造：体験フロー全体の再設計</span><span class="en-only">Structure: Redesigning the Entire Experience Flow</span></span>
+      <span class="layer-tag" style="background:var(--l5)"><span class="ja-only">表層：空間ビジュアル・環境デザイン</span><span class="en-only">Surface: Spatial Visual & Environmental Design</span></span>
+    </div>
+  </div>
+  <div class="lesson"><strong><span class="ja-only">UXの教訓</span><span class="en-only">UX Lesson</span></strong><span class="ja-only">「製品の機能」ではなく「人間の体験全体のシステム」を設計対象にする。デザイン思考の共感フェーズが、技術的最適化では決して辿り着けない解を見つけた。（参照：第15章 ダブルダイヤモンド）</span><span class="en-only">Design the "entire system of human experience," not just product features. The empathy phase of design thinking found solutions that technical optimization could never reach. (Ref: Ch.15 Double Diamond)</span></div>
+</div>
+</div>
+<div class="cite">Dietz, D. (2012). Transforming Healthcare for Children and Their Families. TEDxSanJoseCA. / Brown, T. (2009). <em>Change by Design</em>. HarperBusiness. / IDEO (2013). Design Thinking for Educators.</div>
+</div>
+
+<!-- IBM -->
+<div class="case" id="s3">
+<div class="case-head">
+<div class="meta">
+  <div class="tags">
+    <span class="tag" style="background:#e8f5e9;color:var(--l1)"><span class="ja-only">戦略層 主</span><span class="en-only">Strategy: Primary</span></span>
+    <span class="tag" style="background:#e8f0ff;color:#2c4a8a"><span class="ja-only">組織変革</span><span class="en-only">Org. Change</span></span>
+  </div>
+  <h2><span class="ja-only">IBM Enterprise Design Thinking ——10万人規模のUX戦略変革</span><span class="en-only">IBM Enterprise Design Thinking — UX Strategy Transformation at 100,000-Person Scale</span></h2>
+</div>
+<div class="year">2013〜</div>
+</div>
+<div class="case-body">
+<div class="case-img">
+<svg viewBox="0 0 220 200" xmlns="http://www.w3.org/2000/svg" style="width:100%">
+  <rect width="220" height="200" fill="#fff"/>
+  <!-- Loop diagram -->
+  <circle cx="110" cy="88" r="62" fill="none" stroke="#e0e0e0" stroke-width="1.5" stroke-dasharray="5"/>
+  <!-- 3 nodes -->
+  <circle cx="110" cy="32" r="20" fill="#1A1AFF"/>
+  <text x="110" y="36" text-anchor="middle" font-size="8.5" fill="white" font-family="Arial" font-weight="bold">Observe</text>
+  <circle cx="158" cy="118" r="20" fill="#1A1AFF"/>
+  <text x="158" y="122" text-anchor="middle" font-size="8.5" fill="white" font-family="Arial" font-weight="bold">Reflect</text>
+  <circle cx="62" cy="118" r="20" fill="#1A1AFF"/>
+  <text x="62" y="122" text-anchor="middle" font-size="8.5" fill="white" font-family="Arial" font-weight="bold">Make</text>
+  <!-- Center keys -->
+  <text x="110" y="80" text-anchor="middle" font-size="8" fill="#333" font-family="Arial" font-weight="bold">Hills</text>
+  <text x="110" y="92" text-anchor="middle" font-size="8" fill="#555" font-family="Arial">Playbacks</text>
+  <text x="110" y="104" text-anchor="middle" font-size="8" fill="#555" font-family="Arial">Sponsor Users</text>
+  <!-- ROI -->
+  <rect x="10" y="158" width="200" height="34" rx="5" fill="#e8eaf6" stroke="#9fa8da"/>
+  <text x="110" y="172" text-anchor="middle" font-size="9" fill="#283593" font-weight="bold" font-family="Arial">ROI: $1投資 → $3収益（Forrester 2018）</text>
+  <text x="110" y="185" text-anchor="middle" font-size="8" fill="#666" font-family="Arial">デザイナー 100人 → 1,500人以上</text>
+</svg>
+<p class="cap"><span class="ja-only">IBM Enterprise Design Thinking<br>概念図 ©2026 KAJI<br>IBM Corporationの商標・著作権は同社に帰属</span><span class="en-only">IBM Enterprise Design Thinking<br>Conceptual diagram ©2026 KAJI<br>IBM Corporation trademarks/copyrights belong to IBM</span></p>
+</div>
+<div class="case-text">
+  <h3><span class="ja-only">戦略的背景</span><span class="en-only">Strategic Background</span></h3>
+  <p><span class="ja-only">2013年、IBMはクラウド・AI時代への転換を迫られていた。CEO ジニ・ロメッティは「デザイン主導の会社に変わる」と宣言し、Phil Gilbertを統括として全社的デザイン変革を開始。</span><span class="en-only">In 2013, IBM was under pressure to transition into the cloud and AI era. CEO Ginni Rometty declared "we will become a design-led company" and appointed Phil Gilbert to lead a company-wide design transformation.</span></p>
+  <h3><span class="ja-only">IBM独自のDesign Thinkingフレームワーク</span><span class="en-only">IBM's Custom Design Thinking Framework</span></h3>
+  <ul>
+    <li><span class="ja-only"><strong>Hills</strong>：「誰が・何を・なぜ」でチームの目指す山を定義。ビジネス目標ではなくユーザー成果で語る</span><span class="en-only"><strong>Hills</strong>: Define the team's target mountain with "who, what, why." Framed as user outcomes, not business goals</span></li>
+    <li><span class="ja-only"><strong>Playbacks</strong>：定期的に現在地をステークホルダーに見せるフィードバックループ</span><span class="en-only"><strong>Playbacks</strong>: Regular feedback loops showing current state to stakeholders</span></li>
+    <li><span class="ja-only"><strong>Sponsor Users</strong>：実際のユーザーを開発チームメンバーとして参加させる仕組み</span><span class="en-only"><strong>Sponsor Users</strong>: A mechanism for including real users as development team members</span></li>
+  </ul>
+  <h3><span class="ja-only">成果</span><span class="en-only">Results</span></h3>
+  <ul>
+    <li><span class="ja-only">デザイナー採用：100人→1,500人以上（5年間）</span><span class="en-only">Designer hiring: 100 → 1,500+ over 5 years</span></li>
+    <li><span class="ja-only">Forrester Research（2018）：投資$1あたり$3のROI</span><span class="en-only">Forrester Research (2018): $3 ROI per $1 invested</span></li>
+    <li><span class="ja-only">製品開発サイクルが平均33%短縮</span><span class="en-only">Product development cycle shortened by an average of 33%</span></li>
+  </ul>
+  <div class="layer-map">
+    <strong><span class="ja-only">関与レイヤー（全層）</span><span class="en-only">Layers Involved (All)</span></strong>
+    <div class="layers">
+      <span class="layer-tag" style="background:var(--l1)"><span class="ja-only">戦略：組織変革・UX KPI設定</span><span class="en-only">Strategy: Org. Transformation & UX KPI Setting</span></span>
+      <span class="layer-tag" style="background:var(--l2)"><span class="ja-only">要件：Hills＝ユーザー成果定義</span><span class="en-only">Scope: Hills = Defining User Outcomes</span></span>
+    </div>
+  </div>
+  <div class="lesson"><strong><span class="ja-only">UXの教訓</span><span class="en-only">UX Lesson</span></strong><span class="ja-only">デザイン思考の組織導入は「ツール導入」でなく「思考文化の変革」。経営レベルのコミットと専任デザイナーへの投資なしに成功はない。（参照：第16章 UXマチュリティモデル）</span><span class="en-only">Organizational adoption of design thinking is "cultural transformation," not "tool adoption." Success requires executive commitment and investment in dedicated designers. (Ref: Ch.16 UX Maturity Model)</span></div>
+</div>
+</div>
+<div class="cite">IBM (2018). Enterprise Design Thinking. ibm.com/design/thinking / Forrester Research (2018). The Total Economic Impact Of IBM's Design Thinking Practice. / Gilbert, P. (2018). IBM Design Keynote.</div>
+</div>
+</section>
+<!-- ===== 第2層：要件層 ===== -->
+<section class="layer-sec" id="layer2">
+<div class="lh" style="background:var(--l2)">
+  <div class="ln">2</div>
+  <div class="lt">
+    <div class="num">Layer 2 — Scope Plane</div>
+    <h2><span class="ja-only">要件層の事例</span><span class="en-only">Scope Plane Cases</span></h2>
+    <p><span class="ja-only">「何を作るか・何を削るか」を決断したデザイン。コンテンツ要件の再定義と行動インサイトが要件を変えた事例。</span><span class="en-only">Design decisions about what to build — and what to cut. Cases where redefining content requirements and behavioral insights transformed scope.</span></p>
+  </div>
+</div>
+
+<!-- GOV.UK コンテンツ -->
+<div class="case" id="sc1">
+<div class="case-head">
+<div class="meta">
+  <div class="tags">
+    <span class="tag" style="background:#e8f0fb;color:var(--l2)"><span class="ja-only">要件層 主</span><span class="en-only">Scope: Primary</span></span>
+    <span class="tag" style="background:#e8f5e9;color:var(--l1)"><span class="ja-only">戦略層 副</span><span class="en-only">Strategy: Secondary</span></span>
+    <span class="tag" style="background:#f0f9ff;color:#0070a8"><span class="ja-only">コンテンツ戦略</span><span class="en-only">Content Strategy</span></span>
+  </div>
+  <h2><span class="ja-only">GOV.UK ——750サイトを1つに、コンテンツ85%削減</span><span class="en-only">GOV.UK — 750 Sites to One, 85% Content Reduction</span></h2>
+</div>
+<div class="year">2012</div>
+</div>
+<div class="case-body">
+<div class="case-img">
+<svg viewBox="0 0 220 200" xmlns="http://www.w3.org/2000/svg" style="width:100%">
+  <rect width="220" height="200" fill="#fff"/>
+  <!-- Header -->
+  <rect width="220" height="32" fill="#0B0C0C"/>
+  <rect x="0" y="0" width="5" height="32" fill="#1D70B8"/>
+  <text x="14" y="21" font-size="13" fill="white" font-family="Arial" font-weight="bold">GOV.UK</text>
+  <!-- Content area -->
+  <text x="14" y="54" font-size="14" fill="#0B0C0C" font-family="Arial" font-weight="bold">Apply for a passport</text>
+  <rect x="14" y="60" width="192" height="1" fill="#B1B4B6"/>
+  <text x="14" y="78" font-size="10" fill="#1D70B8" font-family="Arial">Overview</text>
+  <text x="14" y="95" font-size="10" fill="#1D70B8" font-family="Arial">Eligibility</text>
+  <text x="14" y="112" font-size="10" fill="#1D70B8" font-family="Arial">Documents needed</text>
+  <text x="14" y="129" font-size="10" fill="#1D70B8" font-family="Arial">Apply online</text>
+  <rect x="14" y="142" width="96" height="26" fill="#00703C"/>
+  <text x="62" y="159" text-anchor="middle" font-size="11" fill="white" font-family="Arial" font-weight="bold">Start now →</text>
+  <!-- Stat -->
+  <rect x="10" y="175" width="200" height="20" rx="4" fill="#e8f0fb"/>
+  <text x="110" y="188" text-anchor="middle" font-size="9" fill="var(--l2)" font-family="Arial">750サイト → 1サイト ｜ コンテンツ85%削減</text>
+</svg>
+<p class="cap"><span class="ja-only">GOV.UK スタイル 概念図 ©2026 KAJI<br>実際のUI: Open Government Licence（英国政府）</span><span class="en-only">GOV.UK style conceptual diagram ©2026 KAJI<br>Actual UI: Open Government Licence (UK Government)</span></p>
+</div>
+<div class="case-text">
+  <h3><span class="ja-only">要件定義の問い</span><span class="en-only">The Scope Definition Question</span></h3>
+  <p><span class="ja-only">2011年、英国の政府Webサイトは750以上が乱立。GDS（Government Digital Service）の問いは「<strong>市民が本当に必要とするコンテンツとは何か</strong>」。ユーザー調査から「コンテンツの85%はユーザーが必要としていない」という結論を導いた。</span><span class="en-only">In 2011, over 750 UK government websites sprawled in chaos. The GDS (Government Digital Service) asked: <strong>"what content do citizens actually need?"</strong> User research concluded that 85% of content was not needed by users.</span></p>
+  <h3><span class="ja-only">要件削減のアプローチ</span><span class="en-only">Approach to Reducing Scope</span></h3>
+  <ul>
+    <li><span class="ja-only"><strong>ニーズドリブン要件定義</strong>：「政府が伝えたいこと」でなく「市民がやりたいタスク」で要件を再定義</span><span class="en-only"><strong>Needs-Driven Scope</strong>: Requirements redefined by "tasks citizens want to do," not "what government wants to communicate"</span></li>
+    <li><span class="ja-only"><strong>コンテンツオーディット</strong>：全ページを有用性・正確性・必要性で評価し大量削除</span><span class="en-only"><strong>Content Audit</strong>: Every page evaluated for usefulness, accuracy, and necessity — with mass deletion</span></li>
+    <li><span class="ja-only"><strong>Plain English原則</strong>：専門用語を排除。読了時間を平均65%短縮</span><span class="en-only"><strong>Plain English Principle</strong>: Jargon eliminated. Average reading time reduced by 65%</span></li>
+    <li><span class="ja-only"><strong>User Story駆動</strong>：「市民として、パスポートを申請できるようにしたい」など実タスクから要件化</span><span class="en-only"><strong>User Story-Driven</strong>: Requirements derived from real tasks like "As a citizen, I want to apply for a passport"</span></li>
+  </ul>
+  <div class="layer-map">
+    <strong><span class="ja-only">関与レイヤー</span><span class="en-only">Layers Involved</span></strong>
+    <div class="layers">
+      <span class="layer-tag" style="background:var(--l1)"><span class="ja-only">戦略：ユーザーニーズ最優先の原則</span><span class="en-only">Strategy: User Needs First Principle</span></span>
+      <span class="layer-tag" style="background:var(--l2)"><span class="ja-only">要件：コンテンツ要件の85%削減</span><span class="en-only">Scope: 85% Reduction in Content Requirements</span></span>
+      <span class="layer-tag" style="background:var(--l3)"><span class="ja-only">構造：タスクベースのIA</span><span class="en-only">Structure: Task-Based IA</span></span>
+    </div>
+  </div>
+  <div class="lesson"><strong><span class="ja-only">UXの教訓</span><span class="en-only">UX Lesson</span></strong><span class="ja-only">要件層の最大の仕事は「追加」でなく「削除」。「何を作るか」と同等に「何を作らないか」の判断がUX品質を決める。（参照：第4章 コンテンツ戦略・第5章 MoSCoW法）</span><span class="en-only">The most important job of the Scope plane is not "adding" but "removing." The decision of "what not to build" determines UX quality as much as "what to build." (Ref: Ch.4 Content Strategy · Ch.5 MoSCoW)</span></div>
+</div>
+</div>
+<div class="cite">Government Digital Service (2012). Government Design Principles. gov.uk / Russell, J. (2015). Designing for the User. GDS Blog. / Cabinet Office, UK (2012). Digital by Default Service Standard.</div>
+</div>
+
+<!-- BofA Keep the Change -->
+<div class="case" id="sc2">
+<div class="case-head">
+<div class="meta">
+  <div class="tags">
+    <span class="tag" style="background:#e8f0fb;color:var(--l2)"><span class="ja-only">要件層 主</span><span class="en-only">Scope: Primary</span></span>
+    <span class="tag" style="background:#e8f5e9;color:var(--l1)"><span class="ja-only">戦略層 副</span><span class="en-only">Strategy: Secondary</span></span>
+    <span class="tag" style="background:#fff8e1;color:#8a6000"><span class="ja-only">行動経済学</span><span class="en-only">Behavioral Econ.</span></span>
+  </div>
+  <h2><span class="ja-only">Bank of America「Keep the Change」——行動インサイトが機能要件を生んだ</span><span class="en-only">Bank of America 'Keep the Change' — Behavioral Insight That Created a Feature</span></h2>
+</div>
+<div class="year">2005</div>
+</div>
+<div class="case-body">
+<div class="case-img">
+<svg viewBox="0 0 220 200" xmlns="http://www.w3.org/2000/svg" style="width:100%">
+  <rect width="220" height="200" fill="#fff"/>
+  <!-- Ethnographic observation -->
+  <rect x="8" y="12" width="204" height="36" rx="6" fill="#fff3e0" stroke="#ffcc80"/>
+  <text x="110" y="26" text-anchor="middle" font-size="9" fill="#e65100" font-weight="bold" font-family="Arial">エスノグラフィー調査で発見</text>
+  <text x="110" y="40" text-anchor="middle" font-size="8.5" fill="#555" font-family="Arial">「お釣りをジャーに貯める」という自然な行動</text>
+  <!-- Flow -->
+  <text x="110" y="62" text-anchor="middle" font-size="9" fill="#aaa">↓ 機能要件に転換</text>
+  <rect x="8" y="70" width="204" height="30" rx="5" fill="#e3f2fd" stroke="#90caf9"/>
+  <text x="110" y="83" text-anchor="middle" font-size="9" fill="#1565C0" font-weight="bold" font-family="Arial">コーヒー代 $3.75 → 切り上げ $4.00</text>
+  <text x="110" y="96" text-anchor="middle" font-size="8" fill="#555" font-family="Arial">差額 $0.25 を自動で普通預金へ</text>
+  <!-- Result -->
+  <rect x="8" y="112" width="96" height="52" rx="6" fill="#f5f5f5" stroke="#ccc"/>
+  <text x="56" y="130" text-anchor="middle" font-size="9" fill="#333" font-family="Arial">新規口座開設</text>
+  <text x="56" y="150" text-anchor="middle" font-size="20" fill="#1565C0" font-weight="bold" font-family="Arial">250万</text>
+  <text x="56" y="162" text-anchor="middle" font-size="8" fill="#666" font-family="Arial">2007年時点</text>
+  <rect x="116" y="112" width="96" height="52" rx="6" fill="#e8f5e9" stroke="#a5d6a7"/>
+  <text x="164" y="130" text-anchor="middle" font-size="9" fill="#333" font-family="Arial">口座数増加</text>
+  <text x="164" y="150" text-anchor="middle" font-size="20" fill="var(--l1)" font-weight="bold" font-family="Arial">+7.5%</text>
+  <text x="164" y="162" text-anchor="middle" font-size="8" fill="#666" font-family="Arial">新規顧客</text>
+  <!-- Nudge label -->
+  <rect x="8" y="172" width="204" height="20" rx="4" fill="#fff8e1"/>
+  <text x="110" y="185" text-anchor="middle" font-size="9" fill="#8a6000" font-family="Arial">行動経済学「ナッジ」×「デフォルト効果」の応用</text>
+</svg>
+<p class="cap"><span class="ja-only">Keep the Change 概念図 ©2026 KAJI<br>Bank of AmericaおよびIDEOの商標・著作権は各社に帰属</span><span class="en-only">Keep the Change conceptual diagram ©2026 KAJI<br>Bank of America and IDEO trademarks/copyrights belong to their respective companies</span></p>
+</div>
+<div class="case-text">
+  <h3><span class="ja-only">リサーチが機能要件を生んだプロセス</span><span class="en-only">How Research Created Functional Requirements</span></h3>
+  <p><span class="ja-only">IDEOがBank of Americaと共同で「なぜ人は貯金できないのか」を調査。エスノグラフィー調査で「<strong>多くの人がお釣りをジャーに貯める</strong>」という行動パターンを発見。この観察が直接、機能要件「支払いを1ドル単位に切り上げて差額を積立」に変換された。</span><span class="en-only">IDEO collaborated with Bank of America to investigate "why can't people save money?" Ethnographic research uncovered a behavioral pattern: <strong>many people save their change in jars</strong>. This observation directly translated into the functional requirement: "round up purchases to the nearest dollar and save the difference."</span></p>
+  <h3><span class="ja-only">要件設計のポイント</span><span class="en-only">Key Points of Scope Design</span></h3>
+  <ul>
+    <li><span class="ja-only"><strong>デフォルト効果</strong>：オプトインでなくデフォルトON。意思決定コストをゼロに</span><span class="en-only"><strong>Default Effect</strong>: Default ON, not opt-in. Decision-making cost reduced to zero</span></li>
+    <li><span class="ja-only"><strong>見えない摩擦</strong>：支払い行動を変えずに貯蓄を実現。UX上の負担ゼロ</span><span class="en-only"><strong>Invisible Friction</strong>: Saving achieved without changing payment behavior. Zero UX burden</span></li>
+    <li><span class="ja-only"><strong>進捗の可視化</strong>：「今日いくら貯まった」をアプリで表示し動機を維持</span><span class="en-only"><strong>Progress Visibility</strong>: App displays "how much saved today" to sustain motivation</span></li>
+  </ul>
+  <div class="layer-map">
+    <strong><span class="ja-only">関与レイヤー</span><span class="en-only">Layers Involved</span></strong>
+    <div class="layers">
+      <span class="layer-tag" style="background:var(--l1)"><span class="ja-only">戦略：行動インサイトの発見</span><span class="en-only">Strategy: Discovering Behavioral Insights</span></span>
+      <span class="layer-tag" style="background:var(--l2)"><span class="ja-only">要件：ナッジ機能要件の定義</span><span class="en-only">Scope: Defining Nudge Feature Requirements</span></span>
+      <span class="layer-tag" style="background:var(--l4)"><span class="ja-only">骨格：切り上げUIの設計</span><span class="en-only">Skeleton: Rounding-Up UI Design</span></span>
+    </div>
+  </div>
+  <div class="lesson"><strong><span class="ja-only">UXの教訓</span><span class="en-only">UX Lesson</span></strong><span class="ja-only">「ユーザーが言うこと」でなく「ユーザーが実際にすること」を観察せよ。エスノグラフィーが既存行動を機能要件に昇華させた。（参照：第1章 観察調査・第4章 機能要件定義）</span><span class="en-only">Observe "what users actually do," not "what users say." Ethnography elevated existing behaviors into functional requirements. (Ref: Ch.1 Observation · Ch.4 Functional Requirements)</span></div>
+</div>
+</div>
+<div class="cite">IDEO (2013). Keep the Change. ideo.com/case-study / Thaler, R. & Sunstein, C. (2008). <em>Nudge</em>. Yale University Press. / Bank of America (2007). Annual Report.</div>
+</div>
+</section>
+<!-- ===== 第3層：構造層 ===== -->
+<section class="layer-sec" id="layer3">
+<div class="lh" style="background:var(--l3)">
+  <div class="ln">3</div>
+  <div class="lt">
+    <div class="num">Layer 3 — Structure Plane</div>
+    <h2><span class="ja-only">構造層の事例</span><span class="en-only">Structure Plane Cases</span></h2>
+    <p><span class="ja-only">情報の組み立て方・インタラクションフローの設計が体験を決定した事例。IAとフロー設計の力。</span><span class="en-only">Cases where how information was organized and interaction flow was designed determined the experience. The power of IA and flow design.</span></p>
+  </div>
+</div>
+
+<div class="case" id="st1">
+<div class="case-head">
+<div class="meta">
+  <div class="tags">
+    <span class="tag" style="background:#f7f0fd;color:var(--l3)"><span class="ja-only">構造層 主</span><span class="en-only">Structure: Primary</span></span>
+    <span class="tag" style="background:#e8f0fb;color:var(--l2)"><span class="ja-only">要件層 副</span><span class="en-only">Scope: Secondary</span></span>
+    <span class="tag" style="background:#fce4ec;color:#880e4f"><span class="ja-only">EC UX</span><span class="en-only">E-Commerce UX</span></span>
+  </div>
+  <h2><span class="ja-only">Amazon 1-Click購入 ——購入フローのIA革命</span><span class="en-only">Amazon 1-Click Purchase — IA Revolution in the Purchase Flow</span></h2>
+</div>
+<div class="year">1999</div>
+</div>
+<div class="case-body">
+<div class="case-img">
+<svg viewBox="0 0 220 200" xmlns="http://www.w3.org/2000/svg" style="width:100%">
+  <rect width="220" height="200" fill="#fff"/>
+  <!-- Before: 6 step flow -->
+  <text x="8" y="18" font-size="9" fill="#c00" font-weight="bold" font-family="Arial">Before（従来の購入フロー）</text>
+  <rect x="8" y="24" width="28" height="18" rx="3" fill="#ffcdd2"/><text x="22" y="37" text-anchor="middle" font-size="7.5" fill="#333">商品</text>
+  <text x="38" y="35" font-size="8" fill="#aaa">→</text>
+  <rect x="44" y="24" width="28" height="18" rx="3" fill="#ffcdd2"/><text x="58" y="37" text-anchor="middle" font-size="7.5" fill="#333">カート</text>
+  <text x="74" y="35" font-size="8" fill="#aaa">→</text>
+  <rect x="80" y="24" width="28" height="18" rx="3" fill="#ffcdd2"/><text x="94" y="37" text-anchor="middle" font-size="7.5" fill="#333">住所</text>
+  <text x="110" y="35" font-size="8" fill="#aaa">→</text>
+  <rect x="116" y="24" width="28" height="18" rx="3" fill="#ffcdd2"/><text x="130" y="37" text-anchor="middle" font-size="7.5" fill="#333">支払</text>
+  <text x="146" y="35" font-size="8" fill="#aaa">→</text>
+  <rect x="152" y="24" width="28" height="18" rx="3" fill="#ffcdd2"/><text x="166" y="37" text-anchor="middle" font-size="7.5" fill="#333">確認</text>
+  <text x="182" y="35" font-size="8" fill="#aaa">→</text>
+  <rect x="188" y="24" width="24" height="18" rx="3" fill="#ef9a9a"/><text x="200" y="37" text-anchor="middle" font-size="7.5" fill="#333">完了</text>
+  <text x="110" y="58" text-anchor="middle" font-size="9" fill="#c00" font-family="Arial">離脱率 高・カゴ落ち問題</text>
+  <!-- After: 1 click -->
+  <text x="8" y="78" font-size="9" fill="var(--l1)" font-weight="bold" font-family="Arial">After（1-Click）</text>
+  <rect x="8" y="84" width="44" height="22" rx="3" fill="#fff9c4"/><text x="30" y="99" text-anchor="middle" font-size="8" fill="#333" font-family="Arial">商品ページ</text>
+  <text x="56" y="97" font-size="10" fill="#aaa">→</text>
+  <rect x="64" y="84" width="52" height="22" rx="11" fill="#FF9900"/><text x="90" y="99" text-anchor="middle" font-size="9" fill="white" font-weight="bold" font-family="Arial">1-Click!  ✓</text>
+  <text x="120" y="97" font-size="10" fill="#aaa">→</text>
+  <rect x="128" y="84" width="44" height="22" rx="3" fill="#c8e6c9"/><text x="150" y="99" text-anchor="middle" font-size="8" fill="var(--l1)" font-family="Arial">注文完了🎉</text>
+  <text x="110" y="124" text-anchor="middle" font-size="9" fill="var(--l1)" font-family="Arial">6ステップ → 1クリックに削減</text>
+  <!-- Patent note -->
+  <rect x="8" y="134" width="204" height="32" rx="5" fill="#f3e5f5" stroke="#ce93d8"/>
+  <text x="110" y="148" text-anchor="middle" font-size="9" fill="#6a1b9a" font-weight="bold" font-family="Arial">米国特許 #5,960,411（1999年取得）</text>
+  <text x="110" y="161" text-anchor="middle" font-size="8" fill="#555" font-family="Arial">Barnesandnobleが侵害訴訟対象に。競合の構造的劣位を特許で保護</text>
+  <!-- IA insight -->
+  <rect x="8" y="172" width="204" height="22" rx="5" fill="#e8f5e9"/>
+  <text x="110" y="186" text-anchor="middle" font-size="8.5" fill="var(--l1)" font-family="Arial">IAの核心：ステップを「消す」ことで摩擦ゼロの購入フローを実現</text>
+</svg>
+<p class="cap"><span class="ja-only">Amazon 1-Click 概念図 ©2026 KAJI<br>Amazon.comの商標・著作権は同社に帰属</span><span class="en-only">Amazon 1-Click conceptual diagram ©2026 KAJI<br>Amazon.com trademarks/copyrights belong to Amazon</span></p>
+</div>
+<div class="case-text">
+  <h3><span class="ja-only">構造的問題：購入フローの離脱</span><span class="en-only">Structural Problem: Purchase Flow Abandonment</span></h3>
+  <p><span class="ja-only">1990年代のECサイトは住所入力→クレジットカード入力→確認→完了という複数ステップが標準。各ステップが離脱ポイントとなる「カゴ落ち」問題を抱えていた。Amazonは「<strong>購入の意思決定後の摩擦をゼロにする</strong>」という構造的解法を選択。</span><span class="en-only">In the 1990s, e-commerce checkout had multiple steps: enter address → credit card → confirm → done. Each step was a drop-off point in the "cart abandonment" problem. Amazon chose a structural solution: <strong>"eliminate all friction after the purchase decision."</strong></span></p>
+  <h3><span class="ja-only">1-Clickの構造設計</span><span class="en-only">1-Click's Structural Design</span></h3>
+  <ul>
+    <li><span class="ja-only">配送先・支払情報を事前登録し「ボタン1つ」に圧縮</span><span class="en-only">Shipping and payment info pre-registered, compressed to "one button"</span></li>
+    <li><span class="ja-only">購入後30分以内はキャンセル可能（エラー回復の設計）</span><span class="en-only">Cancellable within 30 minutes of purchase (error recovery design)</span></li>
+    <li><span class="ja-only">「購入確認ページ」を廃止——これが最大の構造的革新</span><span class="en-only">"Purchase confirmation page" eliminated — the biggest structural innovation</span></li>
+  </ul>
+  <div class="layer-map">
+    <strong><span class="ja-only">関与レイヤー</span><span class="en-only">Layers Involved</span></strong>
+    <div class="layers">
+      <span class="layer-tag" style="background:var(--l2)"><span class="ja-only">要件：「確認ステップは要件か？」の問い直し</span><span class="en-only">Scope: Questioning "Is a Confirmation Step Required?"</span></span>
+      <span class="layer-tag" style="background:var(--l3)"><span class="ja-only">構造：購入フローの再設計</span><span class="en-only">Structure: Redesigning the Purchase Flow</span></span>
+      <span class="layer-tag" style="background:var(--l4)"><span class="ja-only">骨格：ボタン配置・インターフェース</span><span class="en-only">Skeleton: Button Placement & Interface</span></span>
+    </div>
+  </div>
+  <div class="lesson"><strong><span class="ja-only">UXの教訓</span><span class="en-only">UX Lesson</span></strong><span class="ja-only">優れたIA設計は「ステップを増やして分かりやすくする」のではなく「不要なステップを消す」。ユーザーのメンタルモデル（購入意思決定後は完了したい）に構造を合わせた。（参照：第6章 インタラクション設計・第7章 アフォーダンス）</span><span class="en-only">Great IA design "removes unnecessary steps," not "adds steps to clarify." The structure was aligned with the user's mental model (wanting completion after the purchase decision). (Ref: Ch.6 Interaction Design · Ch.7 Affordance)</span></div>
+</div>
+</div>
+<div class="cite">US Patent 5,960,411. (1999). Method and system for placing a purchase order via a communications network. / Stone, B. (2013). <em>The Everything Store</em>. Little, Brown. / Nielsen, J. (1994). Usability Heuristics. Nielsen Norman Group.</div>
+</div>
+</section>
+
+<!-- ===== 第4層：骨格層 ===== -->
+<section class="layer-sec" id="layer4">
+<div class="lh" style="background:var(--l4)">
+  <div class="ln">4</div>
+  <div class="lt">
+    <div class="num">Layer 4 — Skeleton Plane</div>
+    <h2><span class="ja-only">骨格層の事例</span><span class="en-only">Skeleton Plane Cases</span></h2>
+    <p><span class="ja-only">インターフェースの配置・コンポーネント設計・操作設計が体験の使いやすさを決定した事例。</span><span class="en-only">Cases where interface layout, component design, and interaction design determined the usability of the experience.</span></p>
+  </div>
+</div>
+
+<div class="case" id="sk1">
+<div class="case-head">
+<div class="meta">
+  <div class="tags">
+    <span class="tag" style="background:#fff3e0;color:var(--l4)"><span class="ja-only">骨格層 主</span><span class="en-only">Skeleton: Primary</span></span>
+    <span class="tag" style="background:#f7f0fd;color:var(--l3)"><span class="ja-only">構造層 副</span><span class="en-only">Structure: Secondary</span></span>
+    <span class="tag" style="background:#fce4ec;color:#880e4f"><span class="ja-only">モバイル UI</span><span class="en-only">Mobile UI</span></span>
+  </div>
+  <h2><span class="ja-only">iPhone（初代）——物理キーボードの廃止とタッチUIの骨格</span><span class="en-only">iPhone (1st Gen) — Eliminating Physical Keyboard and the Touch UI Skeleton</span></h2>
+</div>
+<div class="year">2007</div>
+</div>
+<div class="case-body">
+<div class="case-img">
+<svg viewBox="0 0 220 200" xmlns="http://www.w3.org/2000/svg" style="width:100%">
+  <rect width="220" height="200" fill="#fff"/>
+  <!-- Before: BlackBerry style -->
+  <rect x="12" y="16" width="80" height="130" rx="8" fill="#2a2a2a"/>
+  <rect x="18" y="22" width="68" height="68" rx="3" fill="#1a1a2e"/>
+  <text x="52" y="60" text-anchor="middle" font-size="8" fill="#aaa" font-family="Arial">📱 画面</text>
+  <!-- QWERTY keys -->
+  <rect x="16" y="96" width="76" height="44" rx="2" fill="#1a1a1a"/>
+  <text x="19" y="110" font-size="5" fill="#aaa" font-family="Arial">Q W E R T Y U I O P</text>
+  <text x="19" y="120" font-size="5" fill="#aaa" font-family="Arial">A S D F G H J K L</text>
+  <text x="19" y="130" font-size="5" fill="#aaa" font-family="Arial">Z X C V B N M</text>
+  <text x="52" y="155" text-anchor="middle" font-size="8" fill="#c00" font-family="Arial">物理キーボード固定</text>
+  <text x="52" y="166" text-anchor="middle" font-size="7" fill="#999" font-family="Arial">画面が小さく柔軟性なし</text>
+  <!-- After: iPhone -->
+  <rect x="118" y="16" width="90" height="158" rx="14" fill="#1a1a1a"/>
+  <rect x="124" y="30" width="78" height="128" rx="4" fill="#1c1c2e"/>
+  <!-- App grid -->
+  <rect x="130" y="38" width="16" height="16" rx="4" fill="#4285F4"/>
+  <rect x="152" y="38" width="16" height="16" rx="4" fill="#34A853"/>
+  <rect x="174" y="38" width="16" height="16" rx="4" fill="#FBBC05"/>
+  <rect x="130" y="60" width="16" height="16" rx="4" fill="#FF6B35"/>
+  <rect x="152" y="60" width="16" height="16" rx="4" fill="#7B3FA0"/>
+  <rect x="174" y="60" width="16" height="16" rx="4" fill="#EA4335"/>
+  <!-- Keyboard appears on demand -->
+  <rect x="124" y="102" width="78" height="52" rx="3" fill="#2a2a35"/>
+  <text x="163" y="118" text-anchor="middle" font-size="6" fill="#ccc" font-family="Arial">Q W E R T Y U I O P</text>
+  <text x="163" y="128" text-anchor="middle" font-size="6" fill="#ccc" font-family="Arial">A S D F G H J K L</text>
+  <text x="163" y="138" text-anchor="middle" font-size="6" fill="#ccc" font-family="Arial">Z X C V B N M</text>
+  <text x="163" y="152" text-anchor="middle" font-size="6" fill="#aaa" font-family="Arial">↑ タップ時のみ出現</text>
+  <rect x="148" y="166" width="24" height="3" rx="1.5" fill="#555"/>
+  <text x="163" y="182" text-anchor="middle" font-size="8" fill="var(--l1)" font-family="Arial">全画面が操作エリアに</text>
+</svg>
+<p class="cap"><span class="ja-only">iPhone vs 物理キーボード 概念図 ©2026 KAJI<br>Appleの商標・著作権は同社に帰属</span><span class="en-only">iPhone vs physical keyboard conceptual diagram ©2026 KAJI<br>Apple trademarks/copyrights belong to Apple Inc.</span></p>
+</div>
+<div class="case-text">
+  <h3><span class="ja-only">骨格設計の革新</span><span class="en-only">Skeleton Design Innovation</span></h3>
+  <p><span class="ja-only">BlackBerryなど従来のスマートフォンは物理キーボードが常時画面の半分を占有。iPhoneは「<strong>キーボードは必要なときだけ表示する</strong>」というインターフェース骨格の転換により、全画面をコンテキストに応じた操作エリアとして使えるようにした。</span><span class="en-only">Conventional smartphones like BlackBerry had a physical keyboard permanently occupying half the screen. The iPhone made a skeleton-level shift: <strong>"show the keyboard only when needed"</strong> — making the entire screen available as a context-sensitive interaction area.</span></p>
+  <h3><span class="ja-only">骨格設計のポイント</span><span class="en-only">Key Points of Skeleton Design</span></h3>
+  <ul>
+    <li><span class="ja-only"><strong>コンテキスト適応UI</strong>：テキスト入力時のみキーボード表示。写真閲覧時は全画面</span><span class="en-only"><strong>Context-Adaptive UI</strong>: Keyboard shown only during text input. Full screen during photo viewing</span></li>
+    <li><span class="ja-only"><strong>慣性スクロール</strong>：指を離した後も物理法則に従い減速。「物質感」をUIに</span><span class="en-only"><strong>Inertial Scrolling</strong>: Continues to decelerate following physical laws after finger lifts. Brings "physicality" to UI</span></li>
+    <li><span class="ja-only"><strong>ホームボタン1つ原則</strong>：どこからでも戻れる「脱出口」。迷子にならない設計</span><span class="en-only"><strong>Single Home Button Principle</strong>: An "escape hatch" back from anywhere. Design that prevents getting lost</span></li>
+    <li><span class="ja-only"><strong>44pt タッチターゲット</strong>：指での正確な操作を保証する最小サイズの確立</span><span class="en-only"><strong>44pt Touch Target</strong>: Establishing the minimum size to guarantee accurate finger interaction</span></li>
+  </ul>
+  <div class="layer-map">
+    <strong><span class="ja-only">関与レイヤー</span><span class="en-only">Layers Involved</span></strong>
+    <div class="layers">
+      <span class="layer-tag" style="background:var(--l1)"><span class="ja-only">戦略：「電話を再発明する」というビジョン</span><span class="en-only">Strategy: The Vision to "Reinvent the Phone"</span></span>
+      <span class="layer-tag" style="background:var(--l4)"><span class="ja-only">骨格：タッチインターフェース設計</span><span class="en-only">Skeleton: Touch Interface Design</span></span>
+      <span class="layer-tag" style="background:var(--l5)"><span class="ja-only">表層：アイコン・慣性モーション</span><span class="en-only">Surface: Icons & Inertia Motion</span></span>
+    </div>
+  </div>
+  <div class="lesson"><strong><span class="ja-only">UXの教訓</span><span class="en-only">UX Lesson</span></strong><span class="ja-only">「制約の除去」が最大のUX改善になることがある。物理キーボードという「固定された骨格」を取り除くことで、文脈に応じて骨格が変化するUIが実現した。（参照：第9章 モバイルUX設計）</span><span class="en-only">"Removing constraints" can be the greatest UX improvement. By removing the physical keyboard — a "fixed skeleton" — a UI emerged whose skeleton changes with context. (Ref: Ch.9 Mobile UX Design)</span></div>
+</div>
+</div>
+<div class="cite">Isaacson, W. (2011). <em>Steve Jobs</em>. Simon & Schuster. / Apple Inc. (2007). iPhone Introduction Keynote. / Hoober, S. (2013). How do users really hold mobile devices? UXmatters.</div>
+</div>
+</section>
+<!-- ===== 第5層：表層 ===== -->
+<section class="layer-sec" id="layer5">
+<div class="lh" style="background:var(--l5)">
+  <div class="ln">5</div>
+  <div class="lt">
+    <div class="num">Layer 5 — Surface Plane</div>
+    <h2><span class="ja-only">表層の事例</span><span class="en-only">Surface Plane Cases</span></h2>
+    <p><span class="ja-only">ユーザーが最初に触れる視覚・感覚の層。色・タイポグラフィ・余白・モーションが信頼と感情を生んだ事例。</span><span class="en-only">The visual and sensory layer users first encounter. Cases where color, typography, whitespace, and motion created trust and emotion.</span></p>
+  </div>
+</div>
+
+<!-- Apple Macintosh -->
+<div class="case" id="su1">
+<div class="case-head">
+<div class="meta">
+  <div class="tags">
+    <span class="tag" style="background:#fde8e8;color:var(--l5)"><span class="ja-only">表層 主</span><span class="en-only">Surface: Primary</span></span>
+    <span class="tag" style="background:#e8f5e9;color:var(--l1)"><span class="ja-only">戦略層 副</span><span class="en-only">Strategy: Secondary</span></span>
+    <span class="tag" style="background:#f0f4ff;color:#2c4a8a"><span class="ja-only">視覚言語</span><span class="en-only">Visual Language</span></span>
+  </div>
+  <h2><span class="ja-only">Apple Macintosh ——デジタル視覚言語の誕生</span><span class="en-only">Apple Macintosh — The Birth of Digital Visual Language</span></h2>
+</div>
+<div class="year">1984</div>
+</div>
+<div class="case-body">
+<div class="case-img">
+  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e3/Macintosh_128k_transparency.png/200px-Macintosh_128k_transparency.png" alt="Apple Macintosh 128K">
+  <p class="cap"><span class="ja-only">Apple Macintosh 128K<br>© Wikimedia Commons / CC BY-SA 2.5<br>デスクトップメタファーUIの商業的起源</span><span class="en-only">Apple Macintosh 128K<br>© Wikimedia Commons / CC BY-SA 2.5<br>Commercial origin of the desktop metaphor UI</span></p>
+</div>
+<div class="case-text">
+  <h3><span class="ja-only">表層デザインの革新</span><span class="en-only">Surface Design Innovation</span></h3>
+  <p><span class="ja-only">Macintoshは「<strong>現実世界のメタファーをピクセルで再現</strong>」する表層デザインを確立。ゴミ箱・フォルダ・書類という視覚的比喩が、コンピュータを初めて触る人々に操作可能性（アフォーダンス）を伝えた。</span><span class="en-only">The Macintosh established surface design by <strong>"recreating real-world metaphors in pixels."</strong> Visual metaphors — trash can, folder, document — communicated affordances to people touching a computer for the very first time.</span></p>
+  <h3><span class="ja-only">表層設計のポイント</span><span class="en-only">Key Points of Surface Design</span></h3>
+  <ul>
+    <li><span class="ja-only"><strong>スキューモーフィズム</strong>：物質的質感（紙・皮・木）のビジュアル表現でデジタルを親しみやすく</span><span class="en-only"><strong>Skeuomorphism</strong>: Visual representation of material textures (paper, leather, wood) makes digital feel familiar</span></li>
+    <li><span class="ja-only"><strong>ビットマップフォント</strong>：Susan Kareによるシカゴ体等。画面での可読性を追求した最初の試み</span><span class="en-only"><strong>Bitmap Fonts</strong>: Chicago and others by Susan Kare. The first pursuit of on-screen legibility</span></li>
+    <li><span class="ja-only"><strong>アイコンデザイン</strong>：Susan Kareが設計した絵文字的アイコンが「視覚的ショートカット」を実現</span><span class="en-only"><strong>Icon Design</strong>: Pictographic icons designed by Susan Kare created "visual shortcuts"</span></li>
+    <li><span class="ja-only"><strong>白黒2値の美学</strong>：限られたディスプレイ解像度の制約を逆手に取ったミニマルな美しさ</span><span class="en-only"><strong>Black-and-White Aesthetic</strong>: Minimal beauty that turned limited display resolution into an advantage</span></li>
+  </ul>
+  <div class="layer-map">
+    <strong><span class="ja-only">関与レイヤー</span><span class="en-only">Layers Involved</span></strong>
+    <div class="layers">
+      <span class="layer-tag" style="background:var(--l1)"><span class="ja-only">戦略：「人間のためのコンピュータ」</span><span class="en-only">Strategy: "A Computer for the Rest of Us"</span></span>
+      <span class="layer-tag" style="background:var(--l3)"><span class="ja-only">構造：デスクトップメタファーのIA</span><span class="en-only">Structure: Desktop Metaphor IA</span></span>
+      <span class="layer-tag" style="background:var(--l5)"><span class="ja-only">表層：視覚言語・アイコン・フォント</span><span class="en-only">Surface: Visual Language · Icons · Fonts</span></span>
+    </div>
+  </div>
+  <div class="lesson"><strong><span class="ja-only">UXの教訓</span><span class="en-only">UX Lesson</span></strong><span class="ja-only">表層の「メタファー」は構造と戦略を支える。デスクトップ・フォルダ・ゴミ箱という視覚言語は、ユーザーのメンタルモデルを形成し学習コストをゼロに近づけた。（参照：第10章 ビジュアルデザイン基礎）</span><span class="en-only">Surface "metaphors" support structure and strategy. The visual language of desktop, folder, and trash can shaped users' mental models and reduced learning costs to near zero. (Ref: Ch.10 Visual Design Fundamentals)</span></div>
+</div>
+</div>
+<div class="cite">Hertzfeld, A. (2004). <em>Revolution in the Valley</em>. O'Reilly. / Kare, S. (2014). Susan Kare: Icons. kare.com / Wikimedia Commons (CC BY-SA 2.5)</div>
+</div>
+
+<!-- Google -->
+<div class="case" id="su2">
+<div class="case-head">
+<div class="meta">
+  <div class="tags">
+    <span class="tag" style="background:#fde8e8;color:var(--l5)"><span class="ja-only">表層 主</span><span class="en-only">Surface: Primary</span></span>
+    <span class="tag" style="background:#e8f0fb;color:var(--l2)"><span class="ja-only">要件層 副</span><span class="en-only">Scope: Secondary</span></span>
+    <span class="tag" style="background:#f0f9ff;color:#0070a8"><span class="ja-only">ホワイトスペース</span><span class="en-only">White Space</span></span>
+  </div>
+  <h2><span class="ja-only">Google 検索 ——余白という表層戦略</span><span class="en-only">Google Search — Whitespace as Surface Strategy</span></h2>
+</div>
+<div class="year">1998</div>
+</div>
+<div class="case-body">
+<div class="case-img">
+<svg viewBox="0 0 220 180" xmlns="http://www.w3.org/2000/svg" style="width:100%">
+  <rect width="220" height="180" fill="#ffffff"/>
+  <!-- Google Logo -->
+  <text x="110" y="62" text-anchor="middle" font-size="34" font-weight="bold" font-family="Arial,sans-serif">
+    <tspan fill="#4285F4">G</tspan><tspan fill="#EA4335">o</tspan><tspan fill="#FBBC05">o</tspan><tspan fill="#4285F4">g</tspan><tspan fill="#34A853">l</tspan><tspan fill="#EA4335">e</tspan>
+  </text>
+  <!-- Search box -->
+  <rect x="34" y="76" width="152" height="26" rx="13" fill="none" stroke="#dfe1e5" stroke-width="1.5"/>
+  <circle cx="52" cy="89" r="5" fill="none" stroke="#9aa0a6" stroke-width="1.5"/>
+  <line x1="56" y1="93" x2="59" y2="96" stroke="#9aa0a6" stroke-width="1.5"/>
+  <!-- Buttons -->
+  <rect x="58" y="114" width="48" height="22" rx="4" fill="#f8f9fa" stroke="#f8f9fa"/>
+  <text x="82" y="129" text-anchor="middle" font-size="10" fill="#3c4043" font-family="Arial">Google 検索</text>
+  <rect x="114" y="114" width="48" height="22" rx="4" fill="#f8f9fa" stroke="#f8f9fa"/>
+  <text x="138" y="129" text-anchor="middle" font-size="10" fill="#3c4043" font-family="Arial">I'm Feeling Lucky</text>
+  <!-- Whitespace annotation -->
+  <line x1="10" y1="10" x2="10" y2="74" stroke="#4285F4" stroke-width="1" stroke-dasharray="3"/>
+  <text x="14" y="45" font-size="8" fill="#4285F4" font-family="Arial">余白</text>
+  <text x="14" y="55" font-size="8" fill="#4285F4" font-family="Arial">= 意図</text>
+  <line x1="10" y1="106" x2="10" y2="170" stroke="#4285F4" stroke-width="1" stroke-dasharray="3"/>
+  <text x="14" y="140" font-size="8" fill="#4285F4" font-family="Arial">余白</text>
+  <text x="14" y="150" font-size="8" fill="#4285F4" font-family="Arial">= 集中</text>
+  <text x="110" y="166" text-anchor="middle" font-size="8" fill="#aaa" font-family="Arial">概念図 ©2026 KAJI ／ 実際のUI著作権: Google LLC</text>
+</svg>
+<p class="cap"><span class="ja-only">Google 検索 概念図（SVG再現）<br>実際のUI著作権はGoogle LLC</span><span class="en-only">Google Search conceptual diagram (SVG recreation)<br>Actual UI copyright belongs to Google LLC</span></p>
+</div>
+<div class="case-text">
+  <h3><span class="ja-only">表層としての「何もない」</span><span class="en-only">The Surface of "Nothing"</span></h3>
+  <p><span class="ja-only">1998年当時のポータルサイト（Yahoo!・Excite・Lycos）は広告・ニュース・リンクが画面を埋める「情報密度の高さ」を競っていた。Googleは真逆の表層設計——<strong>白いページにロゴと検索ボックスだけ</strong>——を選択した。</span><span class="en-only">In 1998, portal sites (Yahoo!, Excite, Lycos) competed on "information density" — ads, news, and links filling every pixel. Google took the opposite surface approach: <strong>a white page with just a logo and a search box.</strong></span></p>
+  <h3><span class="ja-only">表層設計の意味</span><span class="en-only">The Meaning of Surface Design</span></h3>
+  <ul>
+    <li><span class="ja-only"><strong>視線の誘導</strong>：余白が「次にすること（検索ボックスに入力する）」を自明にする</span><span class="en-only"><strong>Gaze Guidance</strong>: Whitespace makes the next action ("type in the search box") self-evident</span></li>
+    <li><span class="ja-only"><strong>認知負荷ゼロ</strong>：選択肢を持たないUIは意思決定コストがない</span><span class="en-only"><strong>Zero Cognitive Load</strong>: A UI with no choices has no decision-making cost</span></li>
+    <li><span class="ja-only"><strong>速度のUX</strong>：ページ重量を数KBに抑えた表層設計が「速さ」という体験を生む</span><span class="en-only"><strong>Speed as UX</strong>: Surface design that keeps page weight to a few KB creates the experience of "speed"</span></li>
+    <li><span class="ja-only"><strong>Googleカラーの戦略的遊び</strong>：ロゴの4色は「遊び心・多様性」を単色の企業らしさに優先させた</span><span class="en-only"><strong>Google's Strategic Color Play</strong>: The logo's 4 colors prioritized "playfulness and diversity" over monochrome corporate identity</span></li>
+  </ul>
+  <div class="layer-map">
+    <strong><span class="ja-only">関与レイヤー</span><span class="en-only">Layers Involved</span></strong>
+    <div class="layers">
+      <span class="layer-tag" style="background:var(--l2)"><span class="ja-only">要件：「検索以外の要件を排除」</span><span class="en-only">Scope: "Eliminate All Requirements Except Search"</span></span>
+      <span class="layer-tag" style="background:var(--l5)"><span class="ja-only">表層：余白・色・タイポグラフィ</span><span class="en-only">Surface: Whitespace · Color · Typography</span></span>
+    </div>
+  </div>
+  <div class="lesson"><strong><span class="ja-only">UXの教訓</span><span class="en-only">UX Lesson</span></strong><span class="ja-only">「何を載せるか」より「何を載せないか」が表層の品質を決める。余白は「未設計の空間」でなく「意図された集中」。（参照：第10章 グリッドとレイアウト）</span><span class="en-only">"What not to include" determines surface quality more than "what to include." Whitespace is not "undesigned space" — it is "intentional focus." (Ref: Ch.10 Grid & Layout)</span></div>
+</div>
+</div>
+<div class="cite">Battelle, J. (2005). <em>The Search: How Google and Its Rivals Rewrote the Rules of Business and Transformed Our Culture</em>. Portfolio. / Google LLC (2024). Our History. google.com/about/</div>
+</div>
+
+<!-- Material You -->
+<div class="case" id="su3">
+<div class="case-head">
+<div class="meta">
+  <div class="tags">
+    <span class="tag" style="background:#fde8e8;color:var(--l5)"><span class="ja-only">表層 主</span><span class="en-only">Surface: Primary</span></span>
+    <span class="tag" style="background:#e8f0fb;color:var(--l2)"><span class="ja-only">要件層 副</span><span class="en-only">Scope: Secondary</span></span>
+    <span class="tag" style="background:#e8fdf5;color:#006644">Dynamic Color</span>
+  </div>
+  <h2><span class="ja-only">Material You（M3）——ユーザーの壁紙から生まれる表層</span><span class="en-only">Material You (M3) — A Surface Born from the User's Wallpaper</span></h2>
+</div>
+<div class="year">2021</div>
+</div>
+<div class="case-body">
+<div class="case-img">
+<svg viewBox="0 0 220 190" xmlns="http://www.w3.org/2000/svg" style="width:100%">
+  <rect width="220" height="190" fill="#fff"/>
+  <!-- Wallpaper seed -->
+  <rect x="10" y="12" width="60" height="60" rx="6" fill="#FF6B9D"/>
+  <rect x="15" y="17" width="20" height="20" rx="3" fill="#FFB347" opacity=".9"/>
+  <rect x="40" y="42" width="24" height="24" rx="3" fill="#FF8C42" opacity=".9"/>
+  <text x="40" y="82" text-anchor="middle" font-size="8" fill="#555" font-family="Arial">壁紙（シードカラー）</text>
+  <!-- Arrow + Algorithm -->
+  <text x="82" y="46" font-size="10" fill="#ccc">→</text>
+  <rect x="90" y="28" width="50" height="32" rx="5" fill="#f3e5f5" stroke="#ce93d8"/>
+  <text x="115" y="43" text-anchor="middle" font-size="8" fill="#6a1b9a" font-weight="bold" font-family="Arial">Material</text>
+  <text x="115" y="53" text-anchor="middle" font-size="8" fill="#6a1b9a" font-family="Arial">Color Utility</text>
+  <text x="155" y="46" font-size="10" fill="#ccc">→</text>
+  <!-- Generated palette -->
+  <rect x="162" y="12" width="50" height="60" rx="6" fill="#f5f5f5" stroke="#ddd"/>
+  <rect x="166" y="16" width="42" height="10" rx="2" fill="#FF6B9D"/>
+  <rect x="166" y="29" width="42" height="10" rx="2" fill="#FFB3C8"/>
+  <rect x="166" y="42" width="42" height="10" rx="2" fill="#3D0020"/>
+  <rect x="166" y="55" width="42" height="10" rx="2" fill="#FF8FAB"/>
+  <text x="187" y="82" text-anchor="middle" font-size="8" fill="#555" font-family="Arial">生成パレット</text>
+  <!-- Device mockup with colors applied -->
+  <rect x="60" y="96" width="100" height="82" rx="8" fill="#1a1a1a"/>
+  <rect x="64" y="102" width="92" height="72" rx="4" fill="#1C0011"/>
+  <!-- Header -->
+  <rect x="64" y="102" width="92" height="22" rx="4" fill="#FF6B9D"/>
+  <text x="110" y="117" text-anchor="middle" font-size="9" fill="white" font-family="Arial" font-weight="bold">Your App</text>
+  <!-- Card -->
+  <rect x="68" y="128" width="84" height="26" rx="5" fill="#3D0020"/>
+  <rect x="72" y="132" width="40" height="14" rx="3" fill="#FF8FAB"/>
+  <text x="72" y="147" font-size="7" fill="#ccc" font-family="Arial">Content</text>
+  <!-- FAB -->
+  <circle cx="142" cy="163" r="10" fill="#FF6B9D"/>
+  <text x="142" y="167" text-anchor="middle" font-size="12" fill="white">+</text>
+  <text x="110" y="186" text-anchor="middle" font-size="8" fill="#888" font-family="Arial">概念図 ©2026 KAJI ／ 著作権: Google LLC</text>
+</svg>
+<p class="cap"><span class="ja-only">Material You Dynamic Color 概念図<br>実際のUI著作権はGoogle LLC</span><span class="en-only">Material You Dynamic Color conceptual diagram<br>Actual UI copyright belongs to Google LLC</span></p>
+</div>
+<div class="case-text">
+  <h3><span class="ja-only">表層の「パーソナライズ革命」</span><span class="en-only">Surface's 'Personalization Revolution'</span></h3>
+  <p><span class="ja-only">Material Design 3（Material You、2021）は「<strong>ユーザーの壁紙1枚からアプリ全体の配色を動的に生成する</strong>」という表層設計の革新。Material Color Utilityがシードカラーを分析し、コントラスト比・アクセシビリティを保ちながら自動的にカラースキームを構築する。</span><span class="en-only">Material Design 3 (Material You, 2021) is a surface design innovation: <strong>"dynamically generate the entire app color scheme from a single user wallpaper."</strong> Material Color Utility analyzes the seed color and automatically builds a color scheme while maintaining contrast ratio and accessibility.</span></p>
+  <h3><span class="ja-only">表層設計のポイント</span><span class="en-only">Key Points of Surface Design</span></h3>
+  <ul>
+    <li><span class="ja-only"><strong>Dynamic Color</strong>：Primary・Secondary・Tertiary・Error・Neutralの6ロールをアルゴリズムで生成</span><span class="en-only"><strong>Dynamic Color</strong>: 6 color roles — Primary, Secondary, Tertiary, Error, Neutral — generated algorithmically</span></li>
+    <li><span class="ja-only"><strong>トーンベースの設計</strong>：明度（Tone 0〜100）と彩度（Chroma）の関係でコントラストを制御</span><span class="en-only"><strong>Tone-Based Design</strong>: Contrast controlled through the relationship between lightness (Tone 0–100) and saturation (Chroma)</span></li>
+    <li><span class="ja-only"><strong>アクセシビリティ担保</strong>：自動生成されるカラーもWCAG AA基準を満たすよう設計</span><span class="en-only"><strong>Accessibility Guarantee</strong>: Auto-generated colors designed to meet WCAG AA standards</span></li>
+    <li><span class="ja-only"><strong>感情的パーソナライズ</strong>：「自分の色」が使われることで所有感・愛着を生む</span><span class="en-only"><strong>Emotional Personalization</strong>: Using "your colors" creates a sense of ownership and attachment</span></li>
+  </ul>
+  <div class="layer-map">
+    <strong><span class="ja-only">関与レイヤー</span><span class="en-only">Layers Involved</span></strong>
+    <div class="layers">
+      <span class="layer-tag" style="background:var(--l1)"><span class="ja-only">戦略：「Personal」を設計原則に</span><span class="en-only">Strategy: "Personal" as a Design Principle</span></span>
+      <span class="layer-tag" style="background:var(--l5)"><span class="ja-only">表層：Dynamic Color・トーンシステム</span><span class="en-only">Surface: Dynamic Color & Tone System</span></span>
+    </div>
+  </div>
+  <div class="lesson"><strong><span class="ja-only">UXの教訓</span><span class="en-only">UX Lesson</span></strong><span class="ja-only">表層は静的な「正解」ではなく、ユーザーとの動的な関係性になれる。「デザイナーが決める色」から「ユーザーが生成する色」への転換は、表層の意味を根本的に変えた。（参照：第12章 Material Design 3・第10章 カラーセオリー）</span><span class="en-only">Surface can be a dynamic relationship with users, not a static "right answer." The shift from "colors decided by designers" to "colors generated by users" fundamentally changed the meaning of surface. (Ref: Ch.12 Material Design 3 · Ch.10 Color Theory)</span></div>
+</div>
+</div>
+<div class="cite">Google LLC (2024). Material Design 3: Color System. m3.material.io/styles/color / Duarte, M. (2021). Material You. Google I/O 2021. / Material Color Utilities. github.com/material-foundation/material-color-utilities</div>
+</div>
+</section>
+
+<!-- 事例×レイヤー マトリクス -->
+<section id="matrix">
+<h2 class="sh"><span class="ja-only">事例 × レイヤー マトリクス</span><span class="en-only">Case × Layer Matrix</span></h2>
+<p style="font-size:.87rem;color:var(--sub);margin-bottom:14px"><span class="ja-only">◎ 主層　○ 副層　— 関与なし</span><span class="en-only">◎ Primary　○ Secondary　— Not involved</span></p>
+<table>
+<thead><tr><th><span class="ja-only">事例</span><span class="en-only">Case</span></th><th style="color:#a5d6a7"><span class="ja-only">戦略層</span><span class="en-only">Strategy</span></th><th style="color:#90caf9"><span class="ja-only">要件層</span><span class="en-only">Scope</span></th><th style="color:#ce93d8"><span class="ja-only">構造層</span><span class="en-only">Structure</span></th><th style="color:#ffcc80"><span class="ja-only">骨格層</span><span class="en-only">Skeleton</span></th><th style="color:#ef9a9a"><span class="ja-only">表層</span><span class="en-only">Surface</span></th></tr></thead>
+<tbody>
+<tr><td><span class="ja-only">Airbnb 写真戦略</span><span class="en-only">Airbnb Photo Strategy</span></td><td><span class="ja-only">◎ ユーザーニーズ再定義</span><span class="en-only">◎ User Needs Redef.</span></td><td>—</td><td>—</td><td>—</td><td><span class="ja-only">○ 写真品質</span><span class="en-only">○ Photo Quality</span></td></tr>
+<tr><td><span class="ja-only">GE MRI for Kids</span><span class="en-only">GE MRI for Kids</span></td><td><span class="ja-only">◎ 問いの再定義</span><span class="en-only">◎ Question Reframe</span></td><td>—</td><td><span class="ja-only">○ 体験フロー</span><span class="en-only">○ Experience Flow</span></td><td>—</td><td><span class="ja-only">○ 空間デザイン</span><span class="en-only">○ Spatial Design</span></td></tr>
+<tr><td><span class="ja-only">IBM Design Thinking</span><span class="en-only">IBM Design Thinking</span></td><td><span class="ja-only">◎ 組織変革</span><span class="en-only">◎ Org. Transformation</span></td><td><span class="ja-only">○ Hills定義</span><span class="en-only">○ Hills Definition</span></td><td>—</td><td>—</td><td>—</td></tr>
+<tr><td><span class="ja-only">GOV.UK</span><span class="en-only">GOV.UK</span></td><td><span class="ja-only">○ ユーザーニーズ優先</span><span class="en-only">○ User Needs First</span></td><td><span class="ja-only">◎ コンテンツ85%削減</span><span class="en-only">◎ 85% Content Cut</span></td><td><span class="ja-only">○ タスクベースIA</span><span class="en-only">○ Task-Based IA</span></td><td>—</td><td>—</td></tr>
+<tr><td><span class="ja-only">BofA Keep the Change</span><span class="en-only">BofA Keep the Change</span></td><td><span class="ja-only">○ 行動インサイト発見</span><span class="en-only">○ Behavioral Insight</span></td><td><span class="ja-only">◎ ナッジ機能要件</span><span class="en-only">◎ Nudge Requirements</span></td><td>—</td><td><span class="ja-only">○ 切り上げUI</span><span class="en-only">○ Round-Up UI</span></td><td>—</td></tr>
+<tr><td><span class="ja-only">Amazon 1-Click</span><span class="en-only">Amazon 1-Click</span></td><td>—</td><td><span class="ja-only">○ 確認ステップ削除</span><span class="en-only">○ Confirm Step Removed</span></td><td><span class="ja-only">◎ 購入フロー再設計</span><span class="en-only">◎ Purchase Flow Redesign</span></td><td><span class="ja-only">○ ボタン配置</span><span class="en-only">○ Button Placement</span></td><td>—</td></tr>
+<tr><td><span class="ja-only">iPhone（初代）</span><span class="en-only">iPhone (1st Gen)</span></td><td><span class="ja-only">○ 電話再発明</span><span class="en-only">○ Phone Reinvented</span></td><td>—</td><td>—</td><td><span class="ja-only">◎ タッチUI骨格</span><span class="en-only">◎ Touch UI Skeleton</span></td><td><span class="ja-only">○ アイコン・モーション</span><span class="en-only">○ Icons & Motion</span></td></tr>
+<tr><td><span class="ja-only">Apple Macintosh</span><span class="en-only">Apple Macintosh</span></td><td><span class="ja-only">○ 人間のためのPC</span><span class="en-only">○ PC for Everyone</span></td><td>—</td><td><span class="ja-only">○ デスクトップIA</span><span class="en-only">○ Desktop IA</span></td><td>—</td><td><span class="ja-only">◎ 視覚言語・アイコン</span><span class="en-only">◎ Visual Language & Icons</span></td></tr>
+<tr><td><span class="ja-only">Google 検索</span><span class="en-only">Google Search</span></td><td>—</td><td><span class="ja-only">○ 要素の排除</span><span class="en-only">○ Element Elimination</span></td><td>—</td><td>—</td><td><span class="ja-only">◎ 余白・シンプルさ</span><span class="en-only">◎ Whitespace & Simplicity</span></td></tr>
+<tr><td><span class="ja-only">Material You（M3）</span><span class="en-only">Material You (M3)</span></td><td><span class="ja-only">○ Personal原則</span><span class="en-only">○ Personal Principle</span></td><td>—</td><td>—</td><td>—</td><td><span class="ja-only">◎ Dynamic Color</span><span class="en-only">◎ Dynamic Color</span></td></tr>
+</tbody>
+</table>
+</section>
+
+<!-- Timeline -->
+<section id="timeline">
+<h2 class="sh"><span class="ja-only">UI/UX デザイン 60年の歩み</span><span class="en-only">60 Years of UI/UX Design</span></h2>
+<div style="position:relative;padding:0 0 20px 32px;margin:20px 0">
+<div style="position:absolute;left:10px;top:4px;bottom:0;width:2px;background:var(--border)"></div>
+<div style="position:relative;margin-bottom:28px">
+<div style="position:absolute;left:-27px;top:5px;width:12px;height:12px;border-radius:50%;background:var(--accent);border:2px solid var(--surface);z-index:1"></div>
+<div style="font-size:.72rem;font-weight:700;color:var(--accent);letter-spacing:.05em;margin-bottom:2px">1963</div>
+<div style="font-size:.95rem;font-weight:700;margin-bottom:3px">Ivan Sutherland「Sketchpad」</div>
+<div style="font-size:.85rem;color:var(--sub)"><span class="ja-only">世界初のGUI。ライトペンで図形を描く直接操作の概念を確立。MIT博士論文。</span><span class="en-only">World's first GUI. Established the concept of direct manipulation — drawing shapes with a light pen. MIT doctoral thesis.</span></div>
+</div>
+<div style="position:relative;margin-bottom:28px">
+<div style="position:absolute;left:-27px;top:5px;width:12px;height:12px;border-radius:50%;background:var(--accent);border:2px solid var(--surface);z-index:1"></div>
+<div style="font-size:.72rem;font-weight:700;color:var(--accent);letter-spacing:.05em;margin-bottom:2px">1968</div>
+<div style="font-size:.95rem;font-weight:700;margin-bottom:3px">Doug Engelbart「The Mother of All Demos」</div>
+<div style="font-size:.85rem;color:var(--sub)"><span class="ja-only">マウス・ハイパーテキスト・ビデオ会議を90分で実演。「知性増強」ビジョン。</span><span class="en-only">Demonstrated mouse, hypertext, and video conferencing in 90 minutes. The vision of "augmenting human intellect."</span></div>
+</div>
+<div style="position:relative;margin-bottom:28px">
+<div style="position:absolute;left:-27px;top:5px;width:12px;height:12px;border-radius:50%;background:var(--accent);border:2px solid var(--surface);z-index:1"></div>
+<div style="font-size:.72rem;font-weight:700;color:var(--accent);letter-spacing:.05em;margin-bottom:2px">1973</div>
+<div style="font-size:.95rem;font-weight:700;margin-bottom:3px">Xerox PARC「Alto」</div>
+<div style="font-size:.85rem;color:var(--sub)"><span class="ja-only">WIMP（Windows/Icons/Menus/Pointer）の原型。商業化されずも後のGUI全ての源流。</span><span class="en-only">The prototype of WIMP (Windows/Icons/Menus/Pointer). Never commercialized, yet the root of all subsequent GUIs.</span></div>
+</div>
+<div style="position:relative;margin-bottom:28px">
+<div style="position:absolute;left:-27px;top:5px;width:12px;height:12px;border-radius:50%;background:var(--accent);border:2px solid var(--surface);z-index:1"></div>
+<div style="font-size:.72rem;font-weight:700;color:var(--accent);letter-spacing:.05em;margin-bottom:2px">1984</div>
+<div style="font-size:.95rem;font-weight:700;margin-bottom:3px">Apple Macintosh</div>
+<div style="font-size:.85rem;color:var(--sub)"><span class="ja-only">GUIを初めて大衆市場へ。デスクトップメタファー・Susan Kareのアイコン・スキューモーフィズム。</span><span class="en-only">First GUI for the mass market. Desktop metaphor, Susan Kare's icons, and skeuomorphism.</span></div>
+</div>
+<div style="position:relative;margin-bottom:28px">
+<div style="position:absolute;left:-27px;top:5px;width:12px;height:12px;border-radius:50%;background:var(--accent);border:2px solid var(--surface);z-index:1"></div>
+<div style="font-size:.72rem;font-weight:700;color:var(--accent);letter-spacing:.05em;margin-bottom:2px">1990</div>
+<div style="font-size:.95rem;font-weight:700;margin-bottom:3px">World Wide Web（Tim Berners-Lee）</div>
+<div style="font-size:.85rem;color:var(--sub)"><span class="ja-only">ブラウザという新UIの誕生。情報アクセスの民主化。</span><span class="en-only">The birth of the browser as a new UI. Democratization of access to information.</span></div>
+</div>
+<div style="position:relative;margin-bottom:28px">
+<div style="position:absolute;left:-27px;top:5px;width:12px;height:12px;border-radius:50%;background:var(--accent);border:2px solid var(--surface);z-index:1"></div>
+<div style="font-size:.72rem;font-weight:700;color:var(--accent);letter-spacing:.05em;margin-bottom:2px">1995</div>
+<div style="font-size:.95rem;font-weight:700;margin-bottom:3px">Windows 95</div>
+<div style="font-size:.85rem;color:var(--sub)"><span class="ja-only">スタートメニュー・タスクバーの標準化。GUIの大衆化が完成。</span><span class="en-only">Standardization of the Start Menu and Taskbar. The mass adoption of GUI was complete.</span></div>
+</div>
+<div style="position:relative;margin-bottom:28px">
+<div style="position:absolute;left:-27px;top:5px;width:12px;height:12px;border-radius:50%;background:var(--accent);border:2px solid var(--surface);z-index:1"></div>
+<div style="font-size:.72rem;font-weight:700;color:var(--accent);letter-spacing:.05em;margin-bottom:2px">1998</div>
+<div style="font-size:.95rem;font-weight:700;margin-bottom:3px"><span class="ja-only">Google 検索 / iMac G3</span><span class="en-only">Google Search / iMac G3</span></div>
+<div style="font-size:.85rem;color:var(--sub)"><span class="ja-only">白い余白の戦略的UI。iMacは「欲しいコンピュータ」のデザイン革命。</span><span class="en-only">Strategic UI of white space. The iMac was a design revolution — "the computer you want to own."</span></div>
+</div>
+<div style="position:relative;margin-bottom:28px">
+<div style="position:absolute;left:-27px;top:5px;width:12px;height:12px;border-radius:50%;background:var(--accent);border:2px solid var(--surface);z-index:1"></div>
+<div style="font-size:.72rem;font-weight:700;color:var(--accent);letter-spacing:.05em;margin-bottom:2px">1999</div>
+<div style="font-size:.95rem;font-weight:700;margin-bottom:3px"><span class="ja-only">Amazon 1-Click購入</span><span class="en-only">Amazon 1-Click Purchase</span></div>
+<div style="font-size:.85rem;color:var(--sub)"><span class="ja-only">IAによる摩擦ゼロの購入フロー。US特許取得。</span><span class="en-only">Zero-friction purchase flow through IA innovation. US patent granted.</span></div>
+</div>
+<div style="position:relative;margin-bottom:28px">
+<div style="position:absolute;left:-27px;top:5px;width:12px;height:12px;border-radius:50%;background:var(--accent);border:2px solid var(--surface);z-index:1"></div>
+<div style="font-size:.72rem;font-weight:700;color:var(--accent);letter-spacing:.05em;margin-bottom:2px">2001</div>
+<div style="font-size:.95rem;font-weight:700;margin-bottom:3px"><span class="ja-only">iPod + iTunes</span><span class="en-only">iPod + iTunes</span></div>
+<div style="font-size:.85rem;color:var(--sub)"><span class="ja-only">ハードとソフトのUX統合。「1000曲をポケットに」。</span><span class="en-only">UX integration of hardware and software. "1,000 songs in your pocket."</span></div>
+</div>
+<div style="position:relative;margin-bottom:28px">
+<div style="position:absolute;left:-27px;top:5px;width:12px;height:12px;border-radius:50%;background:var(--accent);border:2px solid var(--surface);z-index:1"></div>
+<div style="font-size:.72rem;font-weight:700;color:var(--accent);letter-spacing:.05em;margin-bottom:2px">2007</div>
+<div style="font-size:.95rem;font-weight:700;margin-bottom:3px"><span class="ja-only">iPhone / GE MRI for Kids</span><span class="en-only">iPhone / GE MRI for Kids</span></div>
+<div style="font-size:.85rem;color:var(--sub)"><span class="ja-only">マルチタッチUIの転換点。GEは共感デザインで医療体験を再定義。</span><span class="en-only">The turning point of multi-touch UI. GE redefined the medical experience through empathetic design.</span></div>
+</div>
+<div style="position:relative;margin-bottom:28px">
+<div style="position:absolute;left:-27px;top:5px;width:12px;height:12px;border-radius:50%;background:var(--accent);border:2px solid var(--surface);z-index:1"></div>
+<div style="font-size:.72rem;font-weight:700;color:var(--accent);letter-spacing:.05em;margin-bottom:2px">2009</div>
+<div style="font-size:.95rem;font-weight:700;margin-bottom:3px"><span class="ja-only">Airbnb リデザイン</span><span class="en-only">Airbnb Redesign</span></div>
+<div style="font-size:.85rem;color:var(--sub)"><span class="ja-only">「スケールしない」現地施策でPMFを達成。写真＝戦略。</span><span class="en-only">Achieved PMF through "unscalable" on-site action. Photography = strategy.</span></div>
+</div>
+<div style="position:relative;margin-bottom:28px">
+<div style="position:absolute;left:-27px;top:5px;width:12px;height:12px;border-radius:50%;background:var(--accent);border:2px solid var(--surface);z-index:1"></div>
+<div style="font-size:.72rem;font-weight:700;color:var(--accent);letter-spacing:.05em;margin-bottom:2px">2012</div>
+<div style="font-size:.95rem;font-weight:700;margin-bottom:3px"><span class="ja-only">GOV.UK</span><span class="en-only">GOV.UK</span></div>
+<div style="font-size:.85rem;color:var(--sub)"><span class="ja-only">政府サービスのUX革命。750サイト統合・コンテンツ85%削減。</span><span class="en-only">UX revolution in government services. 750 sites consolidated, 85% content reduction.</span></div>
+</div>
+<div style="position:relative;margin-bottom:28px">
+<div style="position:absolute;left:-27px;top:5px;width:12px;height:12px;border-radius:50%;background:var(--accent);border:2px solid var(--surface);z-index:1"></div>
+<div style="font-size:.72rem;font-weight:700;color:var(--accent);letter-spacing:.05em;margin-bottom:2px">2013</div>
+<div style="font-size:.95rem;font-weight:700;margin-bottom:3px"><span class="ja-only">IBM Design Thinking展開</span><span class="en-only">IBM Design Thinking Rollout</span></div>
+<div style="font-size:.85rem;color:var(--sub)"><span class="ja-only">10万人規模の組織的UX変革。デザイナー100→1,500人。</span><span class="en-only">Organizational UX transformation at 100,000-person scale. Designers: 100 → 1,500.</span></div>
+</div>
+<div style="position:relative;margin-bottom:28px">
+<div style="position:absolute;left:-27px;top:5px;width:12px;height:12px;border-radius:50%;background:var(--accent);border:2px solid var(--surface);z-index:1"></div>
+<div style="font-size:.72rem;font-weight:700;color:var(--accent);letter-spacing:.05em;margin-bottom:2px">2014</div>
+<div style="font-size:.95rem;font-weight:700;margin-bottom:3px"><span class="ja-only">Google Material Design</span><span class="en-only">Google Material Design</span></div>
+<div style="font-size:.85rem;color:var(--sub)"><span class="ja-only">「紙と光」のメタファーによるデザイン言語を公開。OSSで業界標準へ。</span><span class="en-only">Design language based on "paper and light" metaphor released. Became the industry standard through open source.</span></div>
+</div>
+<div style="position:relative;margin-bottom:28px">
+<div style="position:absolute;left:-27px;top:5px;width:12px;height:12px;border-radius:50%;background:var(--accent);border:2px solid var(--surface);z-index:1"></div>
+<div style="font-size:.72rem;font-weight:700;color:var(--accent);letter-spacing:.05em;margin-bottom:2px">2019</div>
+<div style="font-size:.95rem;font-weight:700;margin-bottom:3px"><span class="ja-only">iOS 13 Dark Mode標準化</span><span class="en-only">iOS 13 Dark Mode Standard</span></div>
+<div style="font-size:.85rem;color:var(--sub)"><span class="ja-only">システムレベルのダークモード。セマンティックカラーが標準概念に。</span><span class="en-only">System-level dark mode. Semantic color became a standard concept.</span></div>
+</div>
+<div style="position:relative;margin-bottom:28px">
+<div style="position:absolute;left:-27px;top:5px;width:12px;height:12px;border-radius:50%;background:var(--accent);border:2px solid var(--surface);z-index:1"></div>
+<div style="font-size:.72rem;font-weight:700;color:var(--accent);letter-spacing:.05em;margin-bottom:2px">2021</div>
+<div style="font-size:.95rem;font-weight:700;margin-bottom:3px"><span class="ja-only">Material You（M3）</span><span class="en-only">Material You (M3)</span></div>
+<div style="font-size:.85rem;color:var(--sub)"><span class="ja-only">壁紙からDynamic Color生成。表層のパーソナライズ革命。</span><span class="en-only">Dynamic Color generated from wallpaper. A revolution in surface personalization.</span></div>
+</div>
+<div style="position:relative;margin-bottom:28px">
+<div style="position:absolute;left:-27px;top:5px;width:12px;height:12px;border-radius:50%;background:var(--accent);border:2px solid var(--surface);z-index:1"></div>
+<div style="font-size:.72rem;font-weight:700;color:var(--accent);letter-spacing:.05em;margin-bottom:2px">2023</div>
+<div style="font-size:.95rem;font-weight:700;margin-bottom:3px"><span class="ja-only">Apple Vision Pro / 生成AI UI</span><span class="en-only">Apple Vision Pro / Generative AI UI</span></div>
+<div style="font-size:.85rem;color:var(--sub)"><span class="ja-only">空間コンピューティングUI。Chat UIが生成AIとの標準インタラクションに。</span><span class="en-only">Spatial computing UI. Chat UI became the standard interaction with generative AI.</span></div>
+</div>
+</div>
+</section>
+<footer>
+<p><span class="ja-only">UI/UX 歴史的事例集 ── ギャレットの5レイヤーで読む ── UIUXデザインの教科書 補章</span><span class="en-only">UI/UX Historical Case Studies — Reading Through Garrett's 5 Planes — Supplementary Chapter</span></p>
+<p style="margin-top:6px"><span class="ja-only">初版ドラフト © 2026 KAJI ｜ 画像の著作権は各権利者に帰属。引用・教育目的での掲載。</span><span class="en-only">First draft © 2026 KAJI | Image copyrights belong to their respective owners. Published for citation and educational purposes.</span></p>
+<p style="margin-top:4px"><a href="index.html" style="color:var(--accent)"><span class="ja-only">← 教科書トップへ戻る</span><span class="en-only">← Back to Textbook</span></a></p>
+</footer>
+</main>
+<div id="toolbar">
+  <button class="tb-btn active" id="btn-ja" onclick="setLang('ja')">JA</button>
+  <button class="tb-btn" id="btn-en" onclick="setLang('en')">EN</button>
+</div>
+<script>
+function setLang(l){
+  document.getElementById('root').lang=l;
+  document.getElementById('btn-ja').classList.toggle('active',l==='ja');
+  document.getElementById('btn-en').classList.toggle('active',l==='en');
+  localStorage.setItem('cases-lang',l);
+}
+(function(){var s=localStorage.getItem('cases-lang');if(s)setLang(s);})();
+</script>
+</body></html>
