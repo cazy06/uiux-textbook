@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>アフィリエイトリンク設置テンプレート集</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", sans-serif;
+      background: #f4f5f7;
+      color: #1a1a2e;
+      line-height: 1.7;
+    }
+
+    header {
+      background: #1a1a2e;
+      color: #fff;
+      padding: 2rem 2.5rem;
+      border-bottom: 4px solid #e94560;
+    }
+    header h1 { font-size: 1.5rem; font-weight: 700; }
+    header p { margin-top: .4rem; font-size: .9rem; color: #aab; }
+
+    .container { max-width: 1400px; margin: 0 auto; padding: 2.5rem 2rem; }
+
+    /* Section headers */
+    .section-title {
+      font-size: 1.3rem;
+      font-weight: 800;
+      margin-bottom: 1.5rem;
+      padding: .6rem 1rem;
+      border-left: 5px solid;
+      background: #fff;
+      border-radius: 0 6px 6px 0;
+      box-shadow: 0 1px 4px rgba(0,0,0,.08);
+    }
+    .ux .section-title  { border-color: #4f8ef7; color: #2557c7; }
+    .hist .section-title { border-color: #f7944f; color: #c75a25; }
+
+    .section { margin-bottom: 4rem; }
+
+    /* Template card */
+    .template-card {
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 2px 12px rgba(0,0,0,.08);
+      overflow: hidden;
+      margin-bottom: 2.5rem;
+    }
+    .template-card-header {
+      padding: .8rem 1.2rem;
+      font-size: .85rem;
+      font-weight: 700;
+      letter-spacing: .04em;
+      color: #fff;
+    }
+    .ux .template-card-header  { background: #4f8ef7; }
+    .hist .template-card-header { background: #f7944f; }
+
+    /* 2-col layout */
+    .cols {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+    }
+    @media (max-width: 900px) {
+      .cols { grid-template-columns: 1fr; }
+    }
+
+    .col-code {
+      border-right: 1px solid #eee;
+      padding: 1.2rem 1.4rem;
+      background: #1e1e2e;
+      position: relative;
+    }
+    .col-preview {
+      padding: 1.4rem 1.6rem;
+      background: #fafafa;
+    }
+
+    .col-label {
+      font-size: .75rem;
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      margin-bottom: .7rem;
+    }
+    .col-code .col-label { color: #7ec8e3; }
+    .col-preview .col-label { color: #888; }
+
+    .col-code pre {
+      overflow-x: auto;
+      font-family: "SF Mono", "Fira Code", "Cascadia Code", monospace;
+      font-size: .72rem;
+      line-height: 1.6;
+      color: #cdd6f4;
+      white-space: pre;
+    }
+    .col-code code { display: block; }
+
+    /* Copy button */
+    .copy-btn {
+      position: absolute;
+      top: .8rem;
+      right: .8rem;
+      background: #2d2d4e;
+      color: #cdd6f4;
+      border: 1px solid #555;
+      border-radius: 5px;
+      padding: .3rem .7rem;
+      font-size: .72rem;
+      cursor: pointer;
+      transition: background .2s;
+    }
+    .copy-btn:hover { background: #4f8ef7; color: #fff; border-color: #4f8ef7; }
+    .copy-btn.copied { background: #27ae60; color: #fff; border-color: #27ae60; }
+
+    /* --- Preview styles (the actual affiliate block) --- */
+    .affiliate-block {
+      border: 1px solid #e0e0e0;
+      border-radius: 8px;
+      padding: 1.2rem 1.4rem;
+      background: #fff;
+      font-size: .88rem;
+    }
+    .affiliate-block h3 {
+      font-size: 1rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      padding-bottom: .5rem;
+      border-bottom: 2px solid;
+    }
+    .ux-preview   .affiliate-block h3 { border-color: #4f8ef7; color: #2557c7; }
+    .hist-preview .affiliate-block h3 { border-color: #f7944f; color: #c75a25; }
+
+    .affiliate-block .item-list { list-style: none; display: flex; flex-direction: column; gap: .6rem; }
+    .affiliate-block .item-list li a {
+      display: flex;
+      align-items: center;
+      gap: .6rem;
+      text-decoration: none;
+      color: #1a1a2e;
+      padding: .5rem .7rem;
+      border-radius: 6px;
+      border: 1px solid #e8e8e8;
+      background: #f8f9ff;
+      transition: background .15s, border-color .15s;
+    }
+    .affiliate-block .item-list li a:hover { background: #eef3ff; border-color: #4f8ef7; }
+    .affiliate-block .item-list li a .icon { font-size: 1.1rem; flex-shrink: 0; }
+    .affiliate-block .item-list li a .link-text { flex: 1; }
+    .affiliate-block .item-list li a .link-text .link-title { font-weight: 600; font-size: .85rem; display: block; }
+    .affiliate-block .item-list li a .link-text .link-sub { font-size: .75rem; color: #777; display: block; }
+    .affiliate-block .item-list li a .badge {
+      font-size: .65rem;
+      background: #e94560;
+      color: #fff;
+      border-radius: 3px;
+      padding: .1rem .35rem;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+    .affiliate-block .disclaimer {
+      margin-top: .8rem;
+      font-size: .68rem;
+      color: #aaa;
+    }
+
+    /* hist preview link hover */
+    .hist-preview .affiliate-block .item-list li a:hover { background: #fff5ee; border-color: #f7944f; }
+
+    /* Usage note */
+    .usage-note {
+      background: #fffbe6;
+      border: 1px solid #ffe58f;
+      border-radius: 6px;
+      padding: .8rem 1.1rem;
+      font-size: .82rem;
+      margin-bottom: 1rem;
+      color: #7a5f00;
+    }
+    .usage-note strong { color: #5a3f00; }
+
+    footer {
+      text-align: center;
+      padding: 2rem;
+      font-size: .78rem;
+      color: #aaa;
+      border-top: 1px solid #e0e0e0;
+      background: #fff;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>アフィリエイトリンク設置テンプレート集</h1>
+  <p>UXデザインサイト・世界史地理サイト用 ／ 左：コピー用コード　右：レンダリングプレビュー</p>
+</header>
+
+<div class="container">
+
+  <!-- ===================== SECTION 1: UX ===================== -->
+  <section class="section ux">
+    <div class="section-title">セクション 1：UXデザインサイト用テンプレート</div>
+
+    <!-- Template 1-A: 書籍＋ツール -->
+    <div class="template-card">
+      <div class="template-card-header">テンプレート 1-A ／ 「もっと深く学ぶ」セクション（書籍 + Udemy + Figma）</div>
+      <div class="usage-note" style="margin: .8rem 1.2rem .2rem;">
+        <strong>使い方：</strong> 各用語ページのメインコンテンツ末尾にそのまま貼り付けてください。
+        Amazon タグ・Udemy の実際のアフィリエイトURLは <code>YOUR_ASSOCIATE_TAG</code> / <code>YOUR_UDEMY_AFFILIATE_URL</code> を置き換えてください。
+      </div>
+      <div class="cols">
+        <div class="col-code">
+          <button class="copy-btn" onclick="copyCode(this)">コピー</button>
+          <div class="col-label">コピーするコードはこちら ↓</div>
+          <pre><code id="code-ux-a">&lt;section class="learn-more affiliate-section"&gt;
+  &lt;h3&gt;📚 もっと深く学ぶ&lt;/h3&gt;
+  &lt;ul class="affiliate-list"&gt;
+
+    &lt;!-- Amazon 書籍 1 --&gt;
+    &lt;li&gt;
+      &lt;a href="https://www.amazon.co.jp/dp/4274224721?tag=YOUR_ASSOCIATE_TAG"
+         rel="sponsored noopener" target="_blank"&gt;
+        📖 UXデザインの教科書（安藤昌也 著）
+        &lt;span class="badge"&gt;Amazon&lt;/span&gt;
+      &lt;/a&gt;
+    &lt;/li&gt;
+
+    &lt;!-- Amazon 書籍 2 --&gt;
+    &lt;li&gt;
+      &lt;a href="https://www.amazon.co.jp/dp/4788514346?tag=YOUR_ASSOCIATE_TAG"
+         rel="sponsored noopener" target="_blank"&gt;
+        📖 誰のためのデザイン？（D.A. ノーマン 著）
+        &lt;span class="badge"&gt;Amazon&lt;/span&gt;
+      &lt;/a&gt;
+    &lt;/li&gt;
+
+    &lt;!-- Amazon 書籍 3 --&gt;
+    &lt;li&gt;
+      &lt;a href="https://www.amazon.co.jp/dp/4873119464?tag=YOUR_ASSOCIATE_TAG"
+         rel="sponsored noopener" target="_blank"&gt;
+        📖 リーン UX（Jeff Gothelf 著）
+        &lt;span class="badge"&gt;Amazon&lt;/span&gt;
+      &lt;/a&gt;
+    &lt;/li&gt;
+
+    &lt;!-- Udemy --&gt;
+    &lt;li&gt;
+      &lt;a href="YOUR_UDEMY_AFFILIATE_URL"
+         rel="sponsored noopener" target="_blank"&gt;
+        🎬 UX デザイン完全ガイド（Udemy 動画講座）
+        &lt;span class="badge"&gt;Udemy&lt;/span&gt;
+      &lt;/a&gt;
+    &lt;/li&gt;
+
+    &lt;!-- Figma 公式 --&gt;
+    &lt;li&gt;
+      &lt;a href="https://www.figma.com/ja/"
+         rel="noopener" target="_blank"&gt;
+        🎨 Figma — UIプロトタイピングツール（公式）
+        &lt;span class="badge" style="background:#0d99ff"&gt;Figma&lt;/span&gt;
+      &lt;/a&gt;
+    &lt;/li&gt;
+
+  &lt;/ul&gt;
+  &lt;p class="affiliate-disclaimer"&gt;
+    ※ Amazon リンクはアソシエイトプログラムを利用しています。
+  &lt;/p&gt;
+&lt;/section&gt;</code></pre>
+        </div>
+        <div class="col-preview ux-preview">
+          <div class="col-label">レンダリングプレビュー</div>
+          <div class="affiliate-block">
+            <h3>📚 もっと深く学ぶ</h3>
+            <ul class="item-list">
+              <li>
+                <a href="#" rel="sponsored noopener" target="_blank">
+                  <span class="icon">📖</span>
+                  <span class="link-text">
+                    <span class="link-title">UXデザインの教科書</span>
+                    <span class="link-sub">安藤昌也 著 ／ Amazon</span>
+                  </span>
+                  <span class="badge">Amazon</span>
+                </a>
+              </li>
+              <li>
+                <a href="#" rel="sponsored noopener" target="_blank">
+                  <span class="icon">📖</span>
+                  <span class="link-text">
+                    <span class="link-title">誰のためのデザイン？</span>
+                    <span class="link-sub">D.A. ノーマン 著 ／ Amazon</span>
+                  </span>
+                  <span class="badge">Amazon</span>
+                </a>
+              </li>
+              <li>
+                <a href="#" rel="sponsored noopener" target="_blank">
+                  <span class="icon">📖</span>
+                  <span class="link-text">
+                    <span class="link-title">リーン UX</span>
+                    <span class="link-sub">Jeff Gothelf 著 ／ Amazon</span>
+                  </span>
+                  <span class="badge">Amazon</span>
+                </a>
+              </li>
+              <li>
+                <a href="#" rel="sponsored noopener" target="_blank">
+                  <span class="icon">🎬</span>
+                  <span class="link-text">
+                    <span class="link-title">UX デザイン完全ガイド（動画講座）</span>
+                    <span class="link-sub">Udemy</span>
+                  </span>
+                  <span class="badge">Udemy</span>
+                </a>
+              </li>
+              <li>
+                <a href="#" rel="noopener" target="_blank">
+                  <span class="icon">🎨</span>
+                  <span class="link-text">
+                    <span class="link-title">Figma — UIプロトタイピングツール</span>
+                    <span class="link-sub">公式サイト</span>
+                  </span>
+                  <span class="badge" style="background:#0d99ff">Figma</span>
+                </a>
+              </li>
+            </ul>
+            <p class="disclaimer">※ Amazon リンクはアソシエイトプログラムを利用しています。</p>
+          </div>
+        </div>
+      </div>
+    </div><!-- /template-card -->
+
+    <!-- Template 1-B: CSS only (minimalist) -->
+    <div class="template-card">
+      <div class="template-card-header">テンプレート 1-B ／ ミニマル版（CSS インライン・テキストリンクのみ）</div>
+      <div class="usage-note" style="margin: .8rem 1.2rem .2rem;">
+        <strong>使い方：</strong> CSSを別ファイルに分けたくない場合や、既存デザインへの干渉を最小限にしたいときに使用してください。
+      </div>
+      <div class="cols">
+        <div class="col-code">
+          <button class="copy-btn" onclick="copyCode(this)">コピー</button>
+          <div class="col-label">コピーするコードはこちら ↓</div>
+          <pre><code id="code-ux-b">&lt;div style="
+  margin:2rem 0;
+  padding:1rem 1.2rem;
+  border:1px solid #d0d9ff;
+  border-radius:8px;
+  background:#f5f7ff;
+  font-size:.875rem;
+"&gt;
+  &lt;p style="font-weight:700;margin-bottom:.6rem;color:#2557c7;"&gt;
+    📚 もっと深く学ぶ
+  &lt;/p&gt;
+  &lt;ul style="list-style:none;padding:0;margin:0;
+             display:flex;flex-direction:column;gap:.4rem;"&gt;
+    &lt;li&gt;
+      &lt;a href="https://www.amazon.co.jp/dp/4274224721?tag=YOUR_TAG"
+         rel="sponsored noopener" target="_blank"
+         style="color:#2557c7;"&gt;
+        ▶ UXデザインの教科書（Amazon）
+      &lt;/a&gt;
+    &lt;/li&gt;
+    &lt;li&gt;
+      &lt;a href="https://www.amazon.co.jp/dp/4788514346?tag=YOUR_TAG"
+         rel="sponsored noopener" target="_blank"
+         style="color:#2557c7;"&gt;
+        ▶ 誰のためのデザイン？（Amazon）
+      &lt;/a&gt;
+    &lt;/li&gt;
+    &lt;li&gt;
+      &lt;a href="https://www.amazon.co.jp/dp/4873119464?tag=YOUR_TAG"
+         rel="sponsored noopener" target="_blank"
+         style="color:#2557c7;"&gt;
+        ▶ リーン UX（Amazon）
+      &lt;/a&gt;
+    &lt;/li&gt;
+    &lt;li&gt;
+      &lt;a href="YOUR_UDEMY_AFFILIATE_URL"
+         rel="sponsored noopener" target="_blank"
+         style="color:#2557c7;"&gt;
+        ▶ UX デザイン完全ガイド（Udemy）
+      &lt;/a&gt;
+    &lt;/li&gt;
+    &lt;li&gt;
+      &lt;a href="https://www.figma.com/ja/"
+         rel="noopener" target="_blank"
+         style="color:#0d99ff;"&gt;
+        ▶ Figma 公式サイト
+      &lt;/a&gt;
+    &lt;/li&gt;
+  &lt;/ul&gt;
+  &lt;small style="color:#999;display:block;margin-top:.6rem;"&gt;
+    ※ Amazon リンクはアソシエイトプログラムを利用しています。
+  &lt;/small&gt;
+&lt;/div&gt;</code></pre>
+        </div>
+        <div class="col-preview ux-preview">
+          <div class="col-label">レンダリングプレビュー</div>
+          <div style="margin:0;padding:1rem 1.2rem;border:1px solid #d0d9ff;border-radius:8px;background:#f5f7ff;font-size:.875rem;">
+            <p style="font-weight:700;margin-bottom:.6rem;color:#2557c7;">📚 もっと深く学ぶ</p>
+            <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:.4rem;">
+              <li><a href="#" rel="sponsored noopener" target="_blank" style="color:#2557c7;">▶ UXデザインの教科書（Amazon）</a></li>
+              <li><a href="#" rel="sponsored noopener" target="_blank" style="color:#2557c7;">▶ 誰のためのデザイン？（Amazon）</a></li>
+              <li><a href="#" rel="sponsored noopener" target="_blank" style="color:#2557c7;">▶ リーン UX（Amazon）</a></li>
+              <li><a href="#" rel="sponsored noopener" target="_blank" style="color:#2557c7;">▶ UX デザイン完全ガイド（Udemy）</a></li>
+              <li><a href="#" rel="noopener" target="_blank" style="color:#0d99ff;">▶ Figma 公式サイト</a></li>
+            </ul>
+            <small style="color:#999;display:block;margin-top:.6rem;">※ Amazon リンクはアソシエイトプログラムを利用しています。</small>
+          </div>
+        </div>
+      </div>
+    </div><!-- /template-card -->
+
+  </section><!-- /ux section -->
+
+
+  <!-- ===================== SECTION 2: 世界史・地理 ===================== -->
+  <section class="section hist">
+    <div class="section-title">セクション 2：世界史・地理サイト用テンプレート</div>
+
+    <!-- Template 2-A: フルデザイン版 -->
+    <div class="template-card">
+      <div class="template-card-header">テンプレート 2-A ／ 「この時代をもっと深く学ぶ」セクション（書籍 + スタサプ + NHK + Kindle）</div>
+      <div class="usage-note" style="margin: .8rem 1.2rem .2rem;">
+        <strong>使い方：</strong> 各時代・地域ページの末尾に貼り付けてください。
+        <code>YOUR_ASSOCIATE_TAG</code>・<code>YOUR_STUDYSAPURI_URL</code>・<code>YOUR_NHKOD_URL</code> を実際のアフィリエイトURLに置き換えてください。
+      </div>
+      <div class="cols">
+        <div class="col-code">
+          <button class="copy-btn" onclick="copyCode(this)">コピー</button>
+          <div class="col-label">コピーするコードはこちら ↓</div>
+          <pre><code id="code-hist-a">&lt;section class="learn-more affiliate-section"&gt;
+  &lt;h3&gt;📚 この時代をもっと深く学ぶ&lt;/h3&gt;
+  &lt;ul class="affiliate-list"&gt;
+
+    &lt;!-- Amazon 書籍 1 --&gt;
+    &lt;li&gt;
+      &lt;a href="https://www.amazon.co.jp/dp/4634032325?tag=YOUR_ASSOCIATE_TAG"
+         rel="sponsored noopener" target="_blank"&gt;
+        📖 詳説世界史（山川出版社）
+        &lt;span class="badge"&gt;Amazon&lt;/span&gt;
+      &lt;/a&gt;
+    &lt;/li&gt;
+
+    &lt;!-- Amazon 書籍 2 --&gt;
+    &lt;li&gt;
+      &lt;a href="https://www.amazon.co.jp/dp/4634013304?tag=YOUR_ASSOCIATE_TAG"
+         rel="sponsored noopener" target="_blank"&gt;
+        📖 山川 世界史 一問一答（山川出版社）
+        &lt;span class="badge"&gt;Amazon&lt;/span&gt;
+      &lt;/a&gt;
+    &lt;/li&gt;
+
+    &lt;!-- Amazon 書籍 3 --&gt;
+    &lt;li&gt;
+      &lt;a href="https://www.amazon.co.jp/dp/4634064057?tag=YOUR_ASSOCIATE_TAG"
+         rel="sponsored noopener" target="_blank"&gt;
+        📖 世界史図録 ヒストリカ（山川出版社）
+        &lt;span class="badge"&gt;Amazon&lt;/span&gt;
+      &lt;/a&gt;
+    &lt;/li&gt;
+
+    &lt;!-- スタディサプリ --&gt;
+    &lt;li&gt;
+      &lt;a href="YOUR_STUDYSAPURI_URL"
+         rel="sponsored noopener" target="_blank"&gt;
+        🎬 スタディサプリ — 世界史・地理 動画授業
+        &lt;span class="badge" style="background:#e63946"&gt;スタサプ&lt;/span&gt;
+      &lt;/a&gt;
+    &lt;/li&gt;
+
+    &lt;!-- NHKオンデマンド --&gt;
+    &lt;li&gt;
+      &lt;a href="YOUR_NHKOD_URL"
+         rel="sponsored noopener" target="_blank"&gt;
+        📺 NHK オンデマンド — 歴史・地理番組
+        &lt;span class="badge" style="background:#0052a5"&gt;NHK&lt;/span&gt;
+      &lt;/a&gt;
+    &lt;/li&gt;
+
+    &lt;!-- Kindle Unlimited --&gt;
+    &lt;li&gt;
+      &lt;a href="https://www.amazon.co.jp/kindle-dbs/hz/subscribe/ku?tag=YOUR_ASSOCIATE_TAG"
+         rel="sponsored noopener" target="_blank"&gt;
+        📱 Kindle Unlimited — 歴史書が読み放題
+        &lt;span class="badge" style="background:#ff9900;color:#000"&gt;Kindle&lt;/span&gt;
+      &lt;/a&gt;
+    &lt;/li&gt;
+
+  &lt;/ul&gt;
+  &lt;p class="affiliate-disclaimer"&gt;
+    ※ Amazon リンクはアソシエイトプログラムを利用しています。
+  &lt;/p&gt;
+&lt;/section&gt;</code></pre>
+        </div>
+        <div class="col-preview hist-preview">
+          <div class="col-label">レンダリングプレビュー</div>
+          <div class="affiliate-block">
+            <h3>📚 この時代をもっと深く学ぶ</h3>
+            <ul class="item-list">
+              <li>
+                <a href="#" rel="sponsored noopener" target="_blank">
+                  <span class="icon">📖</span>
+                  <span class="link-text">
+                    <span class="link-title">詳説世界史</span>
+                    <span class="link-sub">山川出版社 ／ Amazon</span>
+                  </span>
+                  <span class="badge">Amazon</span>
+                </a>
+              </li>
+              <li>
+                <a href="#" rel="sponsored noopener" target="_blank">
+                  <span class="icon">📖</span>
+                  <span class="link-text">
+                    <span class="link-title">山川 世界史 一問一答</span>
+                    <span class="link-sub">山川出版社 ／ Amazon</span>
+                  </span>
+                  <span class="badge">Amazon</span>
+                </a>
+              </li>
+              <li>
+                <a href="#" rel="sponsored noopener" target="_blank">
+                  <span class="icon">📖</span>
+                  <span class="link-text">
+                    <span class="link-title">世界史図録 ヒストリカ</span>
+                    <span class="link-sub">山川出版社 ／ Amazon</span>
+                  </span>
+                  <span class="badge">Amazon</span>
+                </a>
+              </li>
+              <li>
+                <a href="#" rel="sponsored noopener" target="_blank">
+                  <span class="icon">🎬</span>
+                  <span class="link-text">
+                    <span class="link-title">スタディサプリ — 世界史・地理 動画授業</span>
+                    <span class="link-sub">スタサプ</span>
+                  </span>
+                  <span class="badge" style="background:#e63946">スタサプ</span>
+                </a>
+              </li>
+              <li>
+                <a href="#" rel="sponsored noopener" target="_blank">
+                  <span class="icon">📺</span>
+                  <span class="link-text">
+                    <span class="link-title">NHK オンデマンド — 歴史・地理番組</span>
+                    <span class="link-sub">NHKオンデマンド</span>
+                  </span>
+                  <span class="badge" style="background:#0052a5">NHK</span>
+                </a>
+              </li>
+              <li>
+                <a href="#" rel="sponsored noopener" target="_blank">
+                  <span class="icon">📱</span>
+                  <span class="link-text">
+                    <span class="link-title">Kindle Unlimited — 歴史書が読み放題</span>
+                    <span class="link-sub">Amazon Kindle</span>
+                  </span>
+                  <span class="badge" style="background:#ff9900;color:#000">Kindle</span>
+                </a>
+              </li>
+            </ul>
+            <p class="disclaimer">※ Amazon リンクはアソシエイトプログラムを利用しています。</p>
+          </div>
+        </div>
+      </div>
+    </div><!-- /template-card -->
+
+    <!-- Template 2-B: ミニマル版 -->
+    <div class="template-card">
+      <div class="template-card-header">テンプレート 2-B ／ ミニマル版（CSS インライン・テキストリンクのみ）</div>
+      <div class="usage-note" style="margin: .8rem 1.2rem .2rem;">
+        <strong>使い方：</strong> 外部 CSS なしで動作します。既存サイトへの影響ゼロで貼り付けできます。
+      </div>
+      <div class="cols">
+        <div class="col-code">
+          <button class="copy-btn" onclick="copyCode(this)">コピー</button>
+          <div class="col-label">コピーするコードはこちら ↓</div>
+          <pre><code id="code-hist-b">&lt;div style="
+  margin:2rem 0;
+  padding:1rem 1.2rem;
+  border:1px solid #ffd5b0;
+  border-radius:8px;
+  background:#fff9f5;
+  font-size:.875rem;
+"&gt;
+  &lt;p style="font-weight:700;margin-bottom:.6rem;color:#c75a25;"&gt;
+    📚 この時代をもっと深く学ぶ
+  &lt;/p&gt;
+  &lt;ul style="list-style:none;padding:0;margin:0;
+             display:flex;flex-direction:column;gap:.4rem;"&gt;
+    &lt;li&gt;
+      &lt;a href="https://www.amazon.co.jp/dp/4634032325?tag=YOUR_TAG"
+         rel="sponsored noopener" target="_blank"
+         style="color:#c75a25;"&gt;
+        ▶ 詳説世界史（山川出版社 ／ Amazon）
+      &lt;/a&gt;
+    &lt;/li&gt;
+    &lt;li&gt;
+      &lt;a href="https://www.amazon.co.jp/dp/4634013304?tag=YOUR_TAG"
+         rel="sponsored noopener" target="_blank"
+         style="color:#c75a25;"&gt;
+        ▶ 山川 世界史 一問一答（Amazon）
+      &lt;/a&gt;
+    &lt;/li&gt;
+    &lt;li&gt;
+      &lt;a href="https://www.amazon.co.jp/dp/4634064057?tag=YOUR_TAG"
+         rel="sponsored noopener" target="_blank"
+         style="color:#c75a25;"&gt;
+        ▶ 世界史図録 ヒストリカ（Amazon）
+      &lt;/a&gt;
+    &lt;/li&gt;
+    &lt;li&gt;
+      &lt;a href="YOUR_STUDYSAPURI_URL"
+         rel="sponsored noopener" target="_blank"
+         style="color:#e63946;"&gt;
+        ▶ スタディサプリ — 世界史・地理 動画授業
+      &lt;/a&gt;
+    &lt;/li&gt;
+    &lt;li&gt;
+      &lt;a href="YOUR_NHKOD_URL"
+         rel="sponsored noopener" target="_blank"
+         style="color:#0052a5;"&gt;
+        ▶ NHK オンデマンド — 歴史・地理番組
+      &lt;/a&gt;
+    &lt;/li&gt;
+    &lt;li&gt;
+      &lt;a href="https://www.amazon.co.jp/kindle-dbs/hz/subscribe/ku?tag=YOUR_TAG"
+         rel="sponsored noopener" target="_blank"
+         style="color:#c75a25;"&gt;
+        ▶ Kindle Unlimited — 歴史書が読み放題
+      &lt;/a&gt;
+    &lt;/li&gt;
+  &lt;/ul&gt;
+  &lt;small style="color:#999;display:block;margin-top:.6rem;"&gt;
+    ※ Amazon リンクはアソシエイトプログラムを利用しています。
+  &lt;/small&gt;
+&lt;/div&gt;</code></pre>
+        </div>
+        <div class="col-preview hist-preview">
+          <div class="col-label">レンダリングプレビュー</div>
+          <div style="margin:0;padding:1rem 1.2rem;border:1px solid #ffd5b0;border-radius:8px;background:#fff9f5;font-size:.875rem;">
+            <p style="font-weight:700;margin-bottom:.6rem;color:#c75a25;">📚 この時代をもっと深く学ぶ</p>
+            <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:.4rem;">
+              <li><a href="#" rel="sponsored noopener" style="color:#c75a25;">▶ 詳説世界史（山川出版社 ／ Amazon）</a></li>
+              <li><a href="#" rel="sponsored noopener" style="color:#c75a25;">▶ 山川 世界史 一問一答（Amazon）</a></li>
+              <li><a href="#" rel="sponsored noopener" style="color:#c75a25;">▶ 世界史図録 ヒストリカ（Amazon）</a></li>
+              <li><a href="#" rel="sponsored noopener" style="color:#e63946;">▶ スタディサプリ — 世界史・地理 動画授業</a></li>
+              <li><a href="#" rel="sponsored noopener" style="color:#0052a5;">▶ NHK オンデマンド — 歴史・地理番組</a></li>
+              <li><a href="#" rel="sponsored noopener" style="color:#c75a25;">▶ Kindle Unlimited — 歴史書が読み放題</a></li>
+            </ul>
+            <small style="color:#999;display:block;margin-top:.6rem;">※ Amazon リンクはアソシエイトプログラムを利用しています。</small>
+          </div>
+        </div>
+      </div>
+    </div><!-- /template-card -->
+
+  </section><!-- /hist section -->
+
+</div><!-- /container -->
+
+<footer>
+  アフィリエイトリンク設置テンプレート集 ／ 作成日: 2026-05-11 ／ STEERY LLC
+</footer>
+
+<script>
+  function copyCode(btn) {
+    // Find the <code> element in the same .col-code
+    const colCode = btn.closest('.col-code');
+    const code = colCode.querySelector('code');
+    const text = code.textContent;
+
+    navigator.clipboard.writeText(text).then(() => {
+      btn.textContent = 'コピー完了！';
+      btn.classList.add('copied');
+      setTimeout(() => {
+        btn.textContent = 'コピー';
+        btn.classList.remove('copied');
+      }, 2000);
+    }).catch(() => {
+      // Fallback for environments without clipboard API
+      const ta = document.createElement('textarea');
+      ta.value = text;
+      ta.style.position = 'fixed';
+      ta.style.opacity = '0';
+      document.body.appendChild(ta);
+      ta.select();
+      document.execCommand('copy');
+      document.body.removeChild(ta);
+      btn.textContent = 'コピー完了！';
+      btn.classList.add('copied');
+      setTimeout(() => {
+        btn.textContent = 'コピー';
+        btn.classList.remove('copied');
+      }, 2000);
+    });
+  }
+</script>
+</body>
+</html>
